@@ -18,7 +18,7 @@ public class Ejercicio1 extends Ejercicio
     {
         System.out.print("Ingrese la cadena a procesar (sin saltos de línea): ");
         String c = scanner.nextLine();
-        int num = this.leerEnteroPositivo("Indique la longitud mínima de una palabra para ser contabilizada: ", scanner);
+        int num = this.leerEnteroPositivo("Indique la longitud minima de una palabra para ser contabilizada: ", scanner);
         System.out.println("Palabra mas usada: " + this.palabraMasUsada(c, num));
         this.esperarEnter(scanner);
     }

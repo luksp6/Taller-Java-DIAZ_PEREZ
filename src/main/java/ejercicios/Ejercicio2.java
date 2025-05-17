@@ -17,7 +17,7 @@ public class Ejercicio2 extends Ejercicio
     @Override
     public void resolver(Scanner scanner) 
     {
-        int num = leerEnteroPositivo("Indique el número para el que desea obtener su Fibonacci: ", scanner);
+        int num = leerEnteroPositivo("Indique el numero para el que desea obtener su Fibonacci: ", scanner);
         List<BigInteger> resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
         System.out.println("Fibonacci(" + num + ") = " + fibonacci(num, resultados));        
         esperarEnter(scanner);

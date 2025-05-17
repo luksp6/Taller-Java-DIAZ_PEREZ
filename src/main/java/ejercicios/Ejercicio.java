@@ -28,7 +28,7 @@ public abstract class Ejercicio
             System.out.println("1. Nueva ejecucion");
             System.out.println("2. Ejecutar los tests predefinidos");
             System.out.println("3. Volver");
-            System.out.print("Seleccione una opción: ");           
+            System.out.print("Seleccione una opcion: ");           
             int opcion = scanner.nextInt();
             switch (opcion)
             {
@@ -39,14 +39,14 @@ public abstract class Ejercicio
                 case 2:
                     this.test();
                     scanner.nextLine();
-                    System.out.println("Presione Enter para regresar al sub-menú");
+                    System.out.println("Presione Enter para regresar al sub-menu");
                     scanner.nextLine();
                     break;
                 case 3:
                     salir = true;
                     break;
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    System.out.println("Opcion invalida. Intente nuevamente.");
             }
         }
     }
@@ -62,11 +62,11 @@ public abstract class Ejercicio
             {
                 num = scanner.nextInt();
                 if (num < 0)
-                    System.out.println("El número debe ser positivo. Intente nuevamente.");
+                    System.out.println("El numero debe ser positivo. Intente nuevamente.");
             }
             else
             {
-                System.out.println("Entrada inválida. Debe ingresar un número entero positivo.");
+                System.out.println("Entrada invalida. Debe ingresar un número entero positivo.");
                 scanner.next();
             }
         }
@@ -77,7 +77,7 @@ public abstract class Ejercicio
 
     protected void esperarEnter(Scanner scanner)
     {
-        System.out.println("Presione Enter para regresar al sub-menú");
+        System.out.println("Presione Enter para regresar al sub-menu");
         scanner.nextLine();
     }
 
