@@ -1,13 +1,28 @@
-package main.java.ejercicio1;
+package main.java.ejercicios;
 
 import java.util.Map;
+import java.util.Scanner;
 import java.util.HashMap;
 
-public class Ejercicio1
+public class Ejercicio1 extends Ejercicio
 {
 
-    public Ejercicio1() {
+    public Ejercicio1(String nombre)    
+    {
+        super(nombre);
     }
+
+
+    @Override
+    public void resolver(Scanner scanner) 
+    {
+        System.out.print("Ingrese la cadena a procesar (sin saltos de línea): ");
+        String c = scanner.nextLine();
+        int num = this.leerEnteroPositivo("Indique la longitud mínima de una palabra para ser contabilizada: ", scanner);
+        System.out.println("Palabra mas usada: " + this.palabraMasUsada(c, num));
+        this.esperarEnter(scanner);
+    }
+
 
     public String palabraMasUsada(String cadena, int delimitador) 
     {
@@ -41,7 +56,9 @@ public class Ejercicio1
         }
         return masUsada;
     }
-
+    
+    
+    @Override
     public void test()
     {
         String cadena = "pablito clavo un clavito, que clavito clavo pablito pablito,que,que,que;que%que,que";

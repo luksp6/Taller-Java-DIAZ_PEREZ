@@ -1,18 +1,40 @@
 package main.java;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-import main.java.ejercicio1.Ejercicio1;
-import main.java.ejercicio2.Ejercicio2;
+import main.java.ejercicios.*;
 
 public class Main 
 {
     public static void main(String[] args)
     {
-        Ejercicio1 ej1 = new Ejercicio1();
-        //ej1.test();
+        List<Ejercicio> ejercicios = new ArrayList<>();
+        Ejercicio ej1 = new Ejercicio1("Obtener palabra más usada");
+        Ejercicio ej2 = new Ejercicio2("Calcular Fibonacci");
+        ejercicios.add(ej1);
+        ejercicios.add(ej2);
 
-        Ejercicio2 ej2 = new Ejercicio2();
-        System.out.println(ej2.fibonacci(1000));
+
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
+        while (!salir)
+        {
+            System.out.println("\n--- MENU PRINCIPAL ---");
+            for (int i = 0; i < ejercicios.size(); i++)
+                System.out.println((i + 1) + ". " + ejercicios.get(i).getNombre());
+            System.out.println((ejercicios.size() + 1) + ". Salir");
+            System.out.print("Seleccione una opción: ");
+            int opcion = scanner.nextInt();
+
+            if (opcion <= ejercicios.size())
+                ejercicios.get(opcion - 1).start(scanner);
+            else if (opcion == ejercicios.size() + 1)
+                salir = true;
+            else
+                System.out.println("Opción inválida. Intente nuevamente.");
+        }
+        scanner.close();
     }
 }
