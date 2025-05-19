@@ -52,15 +52,30 @@ public class Node
 
     public String toString()
     {
-        String s = Integer.toString(this.data) + " ";
-        if (this.left != null)
-            s += "(" + this.left.getData() + ") ";
-        if (this.right != null)
-            s += "(" + this.right.getData() + ") ";
-        if (this.left != null)
-            s += this.left.toString();
-        if (this.right != null)
-            s += this.right.toString();
-        return s + "\n";
+
+        return buildString(this, "", true);
+    }
+    
+    private String buildString(Node nodo, String prefijo, boolean esIzq)
+    {
+        if (nodo == null)
+            return "";
+    
+        String s = prefijo;
+        if (esIzq)
+        {            
+            s += "├── ";
+            prefijo += "│   ";
+        }
+        else
+        {
+            s += "└── ";
+            prefijo += "    ";
+        }
+        s += nodo.getData() + "\n";
+        s += buildString(nodo.getLeft(), prefijo, true);
+        s += buildString(nodo.getRight(), prefijo, false);
+    
+        return s;
     }
 }
