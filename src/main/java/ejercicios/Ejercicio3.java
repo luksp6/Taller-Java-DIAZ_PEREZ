@@ -31,13 +31,7 @@ public class Ejercicio3 extends Ejercicio
             return true;
         else
         {
-            boolean cumpleLeft = true;
-            boolean cumpleRight = true;
-            if (arbol.getLeft() != null)
-                cumpleLeft = arbol.getData() > arbol.getLeft().getData();
-            if (arbol.getRight() != null)
-                cumpleRight = arbol.getData() < arbol.getRight().getData();
-            return cumpleLeft && cumpleRight && this.esABB(arbol.getLeft()) && this.esABB(arbol.getRight());
+            return false;
         }
     }
 
