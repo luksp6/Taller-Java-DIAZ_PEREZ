@@ -53,10 +53,10 @@ public class Node
     public String toString()
     {
 
-        return buildString(this, "", true);
+        return toStringHelper(this, "", true);
     }
     
-    private String buildString(Node nodo, String prefijo, boolean esIzq)
+    private String toStringHelper(Node nodo, String prefijo, boolean esIzq)
     {
         if (nodo == null)
             return "";
@@ -73,8 +73,8 @@ public class Node
             prefijo += "    ";
         }
         s += nodo.getData() + "\n";
-        s += buildString(nodo.getLeft(), prefijo, true);
-        s += buildString(nodo.getRight(), prefijo, false);
+        s += toStringHelper(nodo.getLeft(), prefijo, true);
+        s += toStringHelper(nodo.getRight(), prefijo, false);
     
         return s;
     }
