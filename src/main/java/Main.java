@@ -12,9 +12,13 @@ public class Main
     {
         List<Ejercicio> ejercicios = new ArrayList<>();
         Ejercicio ej1 = new Ejercicio1("Obtener palabra mas usada");
-        Ejercicio ej2 = new Ejercicio2("Calcular Fibonacci");
         ejercicios.add(ej1);
+
+        Ejercicio ej2 = new Ejercicio2("Calcular Fibonacci");
         ejercicios.add(ej2);
+        
+        Ejercicio ej3 = new Ejercicio3("¿Es arbol de busqueda?");
+        ejercicios.add(ej3);
 
 
         Scanner scanner = new Scanner(System.in);
