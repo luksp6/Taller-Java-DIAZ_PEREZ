@@ -94,6 +94,22 @@ public class Ejercicio3 extends Ejercicio
         System.out.println("\n Arbol: \n" + arbol_4);
         System.out.println("Respuesta esperada: false");
         System.out.println("Respuesta obtenida: " + this.esABB(arbol_4, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_5 = new Node(100,
+                                new Node(100),
+                                new Node(100));
+        System.out.println("\n Arbol: \n" + arbol_5);
+        System.out.println("Respuesta esperada: false");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_5, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_6 = new Node(10,
+                                new Node(5,
+                                    null,
+                                    new Node(16)),
+                                new Node(15));
+        System.out.println("\n Arbol: \n" + arbol_6);
+        System.out.println("Respuesta esperada: false");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_6, Integer.MIN_VALUE, Integer.MAX_VALUE));
     }
     
 }
