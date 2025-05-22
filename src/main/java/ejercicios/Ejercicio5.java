@@ -67,8 +67,7 @@ public class Ejercicio5 extends Ejercicio
                 int posF_nueva = portales.get(mapa[posF][posC]).getF(posF);
                 int posC_nueva = portales.get(mapa[posF][posC]).getC(posC);
                 if (!visitados[posF_nueva][posC_nueva])
-                    if (tieneSalida(mapa, limit_f, limit_c, posF_nueva, posC_nueva, visitados, portales))
-                        this.esSalida = true;
+                    if (tieneSalida(mapa, limit_f, limit_c, posF_nueva, posC_nueva, visitados, portales)) this.esSalida = true;
             }
 
             //Movimiento arriba
@@ -85,12 +84,13 @@ public class Ejercicio5 extends Ejercicio
 
             //Movimiento derecha
             if (posC + 1 < limit_c && !visitados[posF][posC + 1])
-                if (tieneSalida(mapa, limit_f, limit_c, posF, posC + 1, visitados, portales)) this.esSalida = true;}
+                if (tieneSalida(mapa, limit_f, limit_c, posF, posC + 1, visitados, portales)) this.esSalida = true;
 
             this.contador--;
             visitados[posF][posC] = false;
             return this.esSalida;
     }
+}
 
     private Map<Character, Portal> reconocerMapa(char[][] mapa, int limit_f, int limit_c)
     {
