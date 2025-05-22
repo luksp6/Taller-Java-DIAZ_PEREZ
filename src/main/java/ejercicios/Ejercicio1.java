@@ -24,7 +24,7 @@ public class Ejercicio1 extends Ejercicio
     }
 
 
-    public String palabraMasUsada(String cadena, int delimitador) 
+    private String palabraMasUsada(String cadena, int delimitador) 
     {
         //Preprocesamos la cadena de entrada separando las palabras por los caracteres que no sean letras
         String[] palabras = cadena.split("[^a-zA-Z]+");

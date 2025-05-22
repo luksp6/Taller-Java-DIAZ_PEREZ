@@ -21,7 +21,7 @@ public class Ejercicio4 extends Ejercicio
         this.esperarEnter(scanner);
     }
 
-    public int fotografiasArtisticas(char[] arr, int x, int y)
+    private int fotografiasArtisticas(char[] arr, int x, int y)
     {
         int cont = 0;
         for (int i = 0; i < arr.length; i++)

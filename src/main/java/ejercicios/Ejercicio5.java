@@ -22,12 +22,36 @@ public class Ejercicio5 extends Ejercicio
     }
 
     @Override
-    public void resolver(Scanner scanner) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resolver'");
+    public void resolver(Scanner scanner)
+    {
+        int f = leerEnteroPositivo("Ingrese la cantidad de filas del mapa: ", scanner);
+        int c = leerEnteroPositivo("Ingrese la cantidad de columnas del mapa: ", scanner);
+        char[][] mapa = new char[f][c];
+        System.out.println("Ingrese el mapa (una linea con " + c + " caracteres por fila):");
+        for (int i = 0; i < f; i++)
+        {
+            while (true)
+            {
+                System.out.print("Fila " + (i + 1) + ": ");
+                String linea = scanner.nextLine().trim();
+                if (linea.length() == c) {
+                    mapa[i] = linea.toCharArray();
+                    break;
+                }
+                else
+                    System.out.println("La linea debe tener exactamente " + c + " caracteres.");
+            }
+        }        
+
+        int pasos = obtenerPasos(mapa, f, c);
+        if (pasos == -1)
+            System.out.println("No se encontro un camino desde la entrada hasta la salida.");
+        else
+            System.out.println("Cantidad minima de pasos hasta la salida: " + pasos);
+
     }
 
-    private int getCamino(char[][] mapa, int f, int c)
+    private int obtenerPasos(char[][] mapa, int f, int c)
     {
         Map<Character, Portal> portales = this.reconocerMapa(mapa, f, c);
         boolean[][] visitados = new boolean[f][c];
@@ -43,8 +67,6 @@ public class Ejercicio5 extends Ejercicio
 
     private boolean tieneSalida(char[][] mapa, int limit_f, int limit_c, int posF, int posC, boolean[][] visitados, Map<Character, Portal> portales)
     {
-        System.out.println("(" + posF + ", " + posC + ")");
-        System.out.println(mapa[posF][posC]);
         if (mapa[posF][posC] == 'S')
         {
             if (this.contador < this.mejorContador)
@@ -53,9 +75,7 @@ public class Ejercicio5 extends Ejercicio
         }
 
         if (mapa[posF][posC] == '#')
-        {
             return false;
-        }
         else
         {
             this.contador++;
@@ -89,8 +109,8 @@ public class Ejercicio5 extends Ejercicio
             this.contador--;
             visitados[posF][posC] = false;
             return this.esSalida;
+        }
     }
-}
 
     private Map<Character, Portal> reconocerMapa(char[][] mapa, int limit_f, int limit_c)
     {
@@ -136,7 +156,7 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("X: " + x);
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: 4");
-        System.out.println("Salida obtenida: " + this.getCamino(mapa, x, y));
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
 
         mapa = new char[][] {
             {'E', '#', '.'},
@@ -149,7 +169,7 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("X: " + x);
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: -1");
-        System.out.println("Salida obtenida: " + this.getCamino(mapa, x, y));
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
 
         
         mapa = new char[][] {
@@ -166,7 +186,7 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("X: " + x);
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: 13");
-        System.out.println("Salida obtenida: " + this.getCamino(mapa, x, y));
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
 
         
     }
