@@ -20,6 +20,12 @@ public class Main
         Ejercicio ej3 = new Ejercicio3("¿Es arbol de busqueda?");
         ejercicios.add(ej3);
 
+        Ejercicio ej4 = new Ejercicio4("Fotografia artistica");
+        ejercicios.add(ej4);
+
+        Ejercicio ej5 = new Ejercicio4("Laberinto magico");
+        ejercicios.add(ej5);
+
 
         Scanner scanner = new Scanner(System.in);
         boolean salir = false;
