@@ -23,7 +23,7 @@ public class Main
         Ejercicio ej4 = new Ejercicio4("Fotografia artistica");
         ejercicios.add(ej4);
 
-        Ejercicio ej5 = new Ejercicio4("Laberinto magico");
+        Ejercicio ej5 = new Ejercicio5("Laberinto magico");
         ejercicios.add(ej5);
 
 

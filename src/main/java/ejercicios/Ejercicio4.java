@@ -1,7 +1,5 @@
 package main.java.ejercicios;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Ejercicio4 extends Ejercicio
@@ -15,8 +13,12 @@ public class Ejercicio4 extends Ejercicio
     @Override
     public void resolver(Scanner scanner)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resolver'");
+        System.out.print("Ingrese el arreglo de fotografos: ");
+        String arreglo = scanner.nextLine();
+        int x = this.leerEnteroPositivo("Indique X: ", scanner);
+        int y = this.leerEnteroPositivo("Indique Y: ", scanner);
+        System.out.println("Fotografias artisticas posibles: " + this.fotografiasArtisticas(arreglo.toCharArray(), x, y));
+        this.esperarEnter(scanner);
     }
 
     public int fotografiasArtisticas(char[] arr, int x, int y)
@@ -76,23 +78,20 @@ public class Ejercicio4 extends Ejercicio
     @Override
     public void test()
     {
-        System.out.println("---------------");
-        System.out.println("Caso:\nA=afaea\n" + "X = 1\n" + "Y = 2");        
+        System.out.println("Entrada:\nafaea\n" + "X = 1\n" + "Y = 2");        
         System.out.println("---------------");
         char[] arr = {'a', 'f', 'a', 'e', 'a'};
         System.out.println("Respuesta esperada: 1");
         System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 2));
         System.out.println();
 
-        System.out.println("---------------");
-        System.out.println("Caso:\nA=afaea\n" + "X = 2\n" + "Y = 3");        
+        System.out.println("Entrada:\nafaea\n" + "X = 2\n" + "Y = 3");        
         System.out.println("---------------");
         System.out.println("Respuesta esperada: 0");
         System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 2, 3));
         System.out.println();
 
-        System.out.println("---------------");
-        System.out.println("Caso:\nA=.feaaf.e\n" + "X = 1\n" + "Y = 3");        
+        System.out.println("Entrada:\n.feaaf.e\n" + "X = 1\n" + "Y = 3");        
         System.out.println("---------------");
         char[] arr_1 = {'.', 'f', 'e', 'a', 'a', 'f', '.', 'e'};
         System.out.println("Respuesta esperada: 3");
