@@ -144,28 +144,33 @@ public class Ejercicio5 extends Ejercicio
             return this.esSalida;
         }
     }
-
+    //Este metodo fue creado para reconocer la entrada al mapa y los portados
     private Map<Character, Portal> reconocerMapa(char[][] mapa, int limit_f, int limit_c)
     {
+    	//Creamos un mapa de portales ya que buscamos que podamos acceder directamente con la letra a su portal
         Map<Character, Portal> portales = new HashMap<>();
+        //recorremos todo el mapa
         for (int i = 0; i < limit_f; i++)
         {
             for (int j = 0; j < limit_c; j++)
             {
+            	//Si es un portal
                 if (Character.isLowerCase(mapa[i][j]))
                 {
+                	//Si ya fue cargado el porta, solo cargamos las otras dos posiciones
                     if (portales.keySet().contains(mapa[i][j]))
                     {
                         portales.get(mapa[i][j]).setX2(i);
                         portales.get(mapa[i][j]).setY2(j);
                     }
-                    else
+                    else //sino, creamos el portal y lo agreamos al mapa solamente con 2 posiciones cargadas.
                     {
                         Portal p = new Portal(i, j);
                         portales.put(mapa[i][j], p);
                     }
                 }
-                else if (mapa[i][j] == 'E')
+                //si es la entrada se carga a las variables pribadas de la clase ejercicio5, asi sabemos por donde empezar
+                else if (mapa[i][j] == 'E') 
                 {
                     this.entradaF = i;
                     this.entradaC = j;
