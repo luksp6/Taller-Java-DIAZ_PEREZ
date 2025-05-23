@@ -170,6 +170,7 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: 4");
         System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
 
         mapa = new char[][] {
             {'E', '#', '.'},
@@ -183,8 +184,8 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: -1");
         System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
 
-        
         mapa = new char[][] {
             {'S', '.', 'b', '#', 'b'},
             {'#', '#', '#', '#', 'a'},
@@ -200,8 +201,72 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("Y: " + y);
         System.out.println("Salida esperada: 13");
         System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
 
-        
+        mapa = new char[][] {
+            {'#', '.', '.', '.', '.', 'b'},
+            {'#', '#', '#', '#', '.', '#'},
+            {'a', '.', '#', '.', '.', '#'},
+            {'#', '.', '#', '#', '#', '#'},
+            {'#', '.', '.', '.', 'a', 'S'},
+            {'E', '#', '#', 'b', '.', '.'}};
+        x = 6;
+        y = 6;
+        System.out.println("Mapa:");
+        this.printMapa(mapa, x, y);
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
+        System.out.println("Salida esperada: -1");
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
+
+        mapa = new char[][] {
+            {'#', '.', '.', '.', 'c', '.', 'S'},
+            {'.', '#', '#', '#', '#', '#', '.'},
+            {'.', '.', 'E', '.', '.', '.', '.'},
+            {'#', '#', '#', '#', '#', '#', '.'},
+            {'c', '.', '.', '.', '.', '.', '.'}};
+        x = 5;
+        y = 7;
+        System.out.println("Mapa:");
+        this.printMapa(mapa, x, y);
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
+        System.out.println("Salida esperada: 6");
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
+
+        mapa = new char[][] {
+            {'E', '#', '.', '.', '#', '.'},
+            {'#', '#', '#', '.', '#', '.'},
+            {'#', 'a', '#', '.', '#', 'a'},
+            {'#', '.', '#', 'S', '#', '#'}};
+        x = 4;
+        y = 6;
+        System.out.println("Mapa:");
+        this.printMapa(mapa, x, y);
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
+        System.out.println("Salida esperada: -1");
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));
+        System.out.println();
+
+        mapa = new char[][] {
+            {'E', '.', '.', 'a', '.', 'S'},
+            {'#', '#', '#', '#', '#', '#'},
+            {'.', '.', '.', '.', '.', '.'},
+            {'#', '#', '#', '#', '#', '#'},
+            {'.', '.', 'a', '.', '.', '.'},
+            {'#', '#', '#', '#', '#', '#'}};
+        x = 6;
+        y = 6;
+        System.out.println("Mapa:");
+        this.printMapa(mapa, x, y);
+        System.out.println("X: " + x);
+        System.out.println("Y: " + y);
+        System.out.println("Salida esperada: 5");
+        System.out.println("Salida obtenida: " + this.obtenerPasos(mapa, x, y));     
+        System.out.println();   
     }
 
     private void printMapa(char[][] mapa, int limit_f, int limit_c)

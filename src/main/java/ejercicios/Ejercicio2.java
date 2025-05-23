@@ -54,6 +54,36 @@ public class Ejercicio2 extends Ejercicio
         System.out.println("Resultado esperado: Fibonacci(0) = 0");        
         System.out.println("Resultado obtenido: " + "Fibonacci(" + num + ") = " + fibonacci(num, resultados));
         resultados.clear();
-        System.out.println();        
+        System.out.println(); 
+
+        num = 5;
+        resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
+        System.out.println("Resultado esperado: Fibonacci(5) = 5");
+        System.out.println("Resultado obtenido: Fibonacci(" + num + ") = " + fibonacci(num, resultados));
+        System.out.println();
+
+        num = 10;
+        resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
+        System.out.println("Resultado esperado: Fibonacci(10) = 55");
+        System.out.println("Resultado obtenido: Fibonacci(" + num + ") = " + fibonacci(num, resultados));
+        System.out.println();
+
+        num = 20;
+        resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
+        System.out.println("Resultado esperado: Fibonacci(20) = 6765");
+        System.out.println("Resultado obtenido: Fibonacci(" + num + ") = " + fibonacci(num, resultados));
+        System.out.println();
+
+        num = 50;
+        resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
+        System.out.println("Resultado esperado: Fibonacci(50) = 12586269025");
+        System.out.println("Resultado obtenido: Fibonacci(" + num + ") = " + fibonacci(num, resultados));
+        System.out.println();
+
+        num = 100;
+        resultados = new ArrayList<>(Collections.nCopies(num, BigInteger.ZERO));
+        System.out.println("Resultado esperado: Fibonacci(100) = 354224848179261915075");
+        System.out.println("Resultado obtenido: Fibonacci(" + num + ") = " + fibonacci(num, resultados));
+        System.out.println();
     }
 }

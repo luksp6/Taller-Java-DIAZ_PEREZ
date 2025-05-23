@@ -78,25 +78,65 @@ public class Ejercicio4 extends Ejercicio
     @Override
     public void test()
     {
-        System.out.println("Entrada:\nafaea\n" + "X = 1\n" + "Y = 2");        
-        System.out.println("---------------");
-        char[] arr = {'a', 'f', 'a', 'e', 'a'};
+        System.out.println("Entrada:\nafaea\n" + "X = 1\n" + "Y = 2");    
+        char[] arr = "afaea".toCharArray();
         System.out.println("Respuesta esperada: 1");
         System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 2));
         System.out.println();
 
-        System.out.println("Entrada:\nafaea\n" + "X = 2\n" + "Y = 3");        
-        System.out.println("---------------");
+        System.out.println("Entrada:\nafaea\n" + "X = 2\n" + "Y = 3");
         System.out.println("Respuesta esperada: 0");
         System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 2, 3));
         System.out.println();
 
-        System.out.println("Entrada:\n.feaaf.e\n" + "X = 1\n" + "Y = 3");        
-        System.out.println("---------------");
-        char[] arr_1 = {'.', 'f', 'e', 'a', 'a', 'f', '.', 'e'};
+        System.out.println("Entrada:\n.feaaf.e\n" + "X = 1\n" + "Y = 3");
+        arr = ".feaaf.e".toCharArray();
         System.out.println("Respuesta esperada: 3");
-        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr_1, 1, 3));
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 3));
         System.out.println();
+    
+        System.out.println("Entrada:\nfaeaeafae\nX = 1\nY = 2");
+        arr = "faeaeafae".toCharArray();
+        System.out.println("Respuesta esperada: 3");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 2));
+        System.out.println();
+
+        System.out.println("Entrada:\nfaaeeafaeae\nX = 1\nY = 3");
+        arr = "faaeeafaeae".toCharArray();
+        System.out.println("Respuesta esperada: 9");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 3));
+        System.out.println();
+
+        System.out.println("Entrada:\naaaaa\nX = 1\nY = 2");
+        arr = "aaaaa".toCharArray();
+        System.out.println("Respuesta esperada: 0");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 2));
+        System.out.println();
+
+        System.out.println("Entrada:\nfaeaeaeaeaeaeaeaeaeae\nX = 1\nY = 10");
+        arr = "faeaeaeaeaeaeaeaeaeae".toCharArray();
+        System.out.println("Respuesta esperada: 25");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 10));
+        System.out.println();
+
+        System.out.println("Entrada:\nfeaeafaeaeafeafaeafae\nX = 2\nY = 3");
+        arr = "feaeafaeaeafeafaeafae".toCharArray();
+        System.out.println("Respuesta esperada: 3");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 2, 3));
+        System.out.println();
+
+        System.out.println("Entrada:\nfeaeafeafeafaeafeafae\nX = 1\nY = 2");
+        arr = "feaeafeafeafaeafeafae".toCharArray();
+        System.out.println("Respuesta esperada: 9");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 2));
+        System.out.println();
+
+        System.out.println("Entrada:\nfffaaaeee\nX = 1\nY = 1");
+        arr = "fffaaaeee".toCharArray();
+        System.out.println("Respuesta esperada: 0");
+        System.out.println("Respuesta obtenida: " + this.fotografiasArtisticas(arr, 1, 1));
+        System.out.println();
+    
     }
     
 }

@@ -119,6 +119,52 @@ public class Ejercicio3 extends Ejercicio
         System.out.println("\n Arbol: \n" + arbol_7);
         System.out.println("Respuesta esperada: true");
         System.out.println("Respuesta obtenida: " + this.esABB(arbol_7, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_8 = new Node(20,
+                            new Node(10,
+                                new Node(5),
+                                new Node(15)),
+                            new Node(30,
+                                new Node(25,
+                                    new Node(22),
+                                    null),
+                                new Node(35)));
+        System.out.println("\n Arbol: \n" + arbol_8);
+        System.out.println("Respuesta esperada: true");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_8, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_9 = new Node(20,
+                            new Node(10,
+                                new Node(5),
+                                new Node(25)),
+                            new Node(30));
+        System.out.println("\n Arbol: \n" + arbol_9);
+        System.out.println("Respuesta esperada: false");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_9, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_10 = new Node(10,
+                            new Node(5,
+                                new Node(2),
+                                new Node(7)),
+                            new Node(20,
+                                new Node(15,
+                                    new Node(12),
+                                    new Node(17)),
+                                new Node(30)));
+        System.out.println("\n Arbol: \n" + arbol_10);
+        System.out.println("Respuesta esperada: true");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_10, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        Node arbol_11 = new Node(10,
+                            new Node(5,
+                                new Node(2),
+                                new Node(7)),
+                            new Node(20,
+                                new Node(9),
+                                new Node(30)));
+        System.out.println("\n Arbol: \n" + arbol_11);
+        System.out.println("Respuesta esperada: false");
+        System.out.println("Respuesta obtenida: " + this.esABB(arbol_11, Integer.MIN_VALUE, Integer.MAX_VALUE));
     }
     
 }
