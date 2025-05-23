@@ -30,8 +30,7 @@ public class Ejercicio5 extends Ejercicio
         System.out.println("Ingrese el laberinto (una linea con " + c + " caracteres sin espacios por fila):");
         boolean tieneEntrada = false;
         while (!tieneEntrada)
-        {
-            
+        {            
             for (int i = 0; i < f; i++)
             {
                 boolean lineaValida = false;
