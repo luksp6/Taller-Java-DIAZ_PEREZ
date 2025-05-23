@@ -24,24 +24,37 @@ public class Ejercicio5 extends Ejercicio
     @Override
     public void resolver(Scanner scanner)
     {
-        int f = leerEnteroPositivo("Ingrese la cantidad de filas del mapa: ", scanner);
-        int c = leerEnteroPositivo("Ingrese la cantidad de columnas del mapa: ", scanner);
+        int f = leerEnteroPositivo("Ingrese la cantidad de filas del laberinto: ", scanner);
+        int c = leerEnteroPositivo("Ingrese la cantidad de columnas del laberinto: ", scanner);
         char[][] mapa = new char[f][c];
-        System.out.println("Ingrese el mapa (una linea con " + c + " caracteres por fila):");
-        for (int i = 0; i < f; i++)
+        System.out.println("Ingrese el laberinto (una linea con " + c + " caracteres sin espacios por fila):");
+        boolean tieneEntrada = false;
+        while (!tieneEntrada)
         {
-            while (true)
+            
+            for (int i = 0; i < f; i++)
             {
-                System.out.print("Fila " + (i + 1) + ": ");
-                String linea = scanner.nextLine().trim();
-                if (linea.length() == c) {
-                    mapa[i] = linea.toCharArray();
-                    break;
+                boolean lineaValida = false;
+                while (!lineaValida)
+                {
+                    System.out.print("Fila " + (i + 1) + ": ");
+                    String linea = scanner.nextLine();
+                    if (linea.length() == c)
+                    {
+                        mapa[i] = linea.toCharArray();
+                        lineaValida = true;
+                    }
+                    else
+                        System.out.println("La linea debe tener exactamente " + c + " caracteres.");
                 }
-                else
-                    System.out.println("La linea debe tener exactamente " + c + " caracteres.");
+                if (!tieneEntrada)
+                    for (char ch : mapa[i])
+                        if (ch == 'E')
+                            tieneEntrada = true;
             }
-        }        
+            if (!tieneEntrada)
+                System.out.println("El laberinto debe tener una entrada 'E'. Ingrese una linea con " + c + " caracteres sin espacios por fila):");
+        }
 
         int pasos = obtenerPasos(mapa, f, c);
         if (pasos == -1)
