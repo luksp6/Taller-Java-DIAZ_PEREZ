@@ -59,6 +59,7 @@ public class Ejercicio5 extends Ejercicio
             Arrays.fill(visitados[i], false);
         this.contador = 0;
         this.mejorContador = Integer.MAX_VALUE;
+        this.esSalida = false;
         if (tieneSalida(mapa, f, c, this.entradaF, this.entradaC, visitados, portales))
             return this.mejorContador;
         else
