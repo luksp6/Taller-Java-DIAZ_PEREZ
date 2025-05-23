@@ -25,8 +25,11 @@ public class Ejercicio4 extends Ejercicio
     {
         int cont = 0;
         for (int i = 0; i < arr.length; i++)
+            //Recorremos el arreglo hasta encontrar un fotógrafo
             if (arr[i] == 'f')
             {
+                //En este punto inicia la búsqueda de un artista tanto en sentido positivo como negativo,
+                //acotando el rango a los valores X e Y recibidos por parámetro
                 cont += recorridoPositivo(arr, 'a', i + x, i + y, x, y);
                 cont += recorridoNegativo(arr, 'a', i - x, i - y, x, y);
             }
@@ -35,26 +38,35 @@ public class Ejercicio4 extends Ejercicio
 
     private int recorridoPositivo(char[] arr, char target, int pos_i, int pos_f, int x, int y)
     {
+        //Se verifica que la posición de inicio de recorrido no esté fuera de los límites del arreglo
         if (pos_i >= arr.length)
             return 0;
 
+        //Se verifica que la posición final de recorrido no sea menor que la inicial
         if (pos_f < pos_i)
             return 0;
 
+        //Se verifica que la posición final de recorrido no sea mayor que los límites del arreglo
         if (pos_f >= arr.length)
             pos_f = arr.length - 1;
 
         int cont = 0;
         for (int i = pos_i; i <= pos_f; i++)
-            if (arr[i] == target)
+            //Se recorre el arreglo dentro del rango dado hasta encontrar el target de búsqueda
+            if (arr[i] == target)            
                 if (target == 'a')
+                    //Si se estaba buscando un artista, se realiza un llamado recursivo
+                    //al método con un nuevo rango de exploración y un escenario como objetivo
                     cont += recorridoPositivo(arr, 'e', i + x, i + y, x, y);
                 else if (target == 'e')
-                        cont++;
+                    //Si se estaba buscando un escenario se incrementa el contador de fotografías artísticas
+                    cont++;
         return cont;
     }
 
     private int recorridoNegativo(char[] arr, char target, int pos_i, int pos_f, int x, int y)
+    //Su funcionamiento es análogo al método recorridoPositivo, con la particularidad de que se recorre
+    //el arreglo en sentido contrario, decrementando posiciones a partir de la posición inicial
     {
         if (pos_i < 0)
             return 0;

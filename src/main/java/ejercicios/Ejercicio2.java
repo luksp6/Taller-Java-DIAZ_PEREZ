@@ -26,14 +26,18 @@ public class Ejercicio2 extends Ejercicio
 
     private BigInteger fibonacci(int num, List<BigInteger> resultados)
     {
+        //Inicialmente verificamos si estamos calculando los valores 0 o 1, ya que en ese caso se debe retornar su mismo valor
         if (num == 0 || num == 1)
             return BigInteger.valueOf(num);
         else
         {
+            //Si calculamos un número distinto a 0 o 1, verificamos si los dos fibonaccis anteriores ya fueron calculados
             if (resultados.get(num - 1) == BigInteger.ZERO)
+                //Si todavía no fueron calculados, se calculan recursivamente y se almacena su valor
                 resultados.set(num - 1, fibonacci(num - 1, resultados));
             if (resultados.get(num - 2) == BigInteger.ZERO)
                 resultados.set(num - 2, fibonacci(num - 2, resultados));
+            //Finalmente se retorna la suma de los dos fibonaccis anteriores
             return resultados.get(num - 1).add(resultados.get(num - 2));
         }
     }

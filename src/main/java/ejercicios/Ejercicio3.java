@@ -27,17 +27,23 @@ public class Ejercicio3 extends Ejercicio
 
     private boolean esABB(Node arbol, int min, int max)
     {
+        //Inicialmente verificamos si el árbol es null, caso para el cuál retornamos verdadero
         if (arbol == null)
             return true;
         else
         {
+            //Si el árbol no es nulo, verificamos que el nodo actual cumpla con la condición
             boolean cumpleDato = arbol.getData() > min && arbol.getData() < max;
             boolean cumpleLeft = true;
             boolean cumpleRight = true;
             if (arbol.getLeft() != null)
+                //Si el árbol tiene un hijo izquierdo, verificamos que este también cumpla con la condición realizando una invocación recursiva
+                //y utilizando el dato del nodo actual como valor máximo
                 cumpleLeft = this.esABB(arbol.getLeft(), min, arbol.getData());
             if (arbol.getRight() != null)
+                //Realizamos lo mismo con el hijo derecho, ahora utilizando el dato actual como valor mínimo
                 cumpleRight = this.esABB(arbol.getRight(), arbol.getData(), max);
+            //Finalmente retornamos un AND entre la evaluación de la función en el nodo actual y en sus hijos
             return cumpleDato && cumpleLeft && cumpleRight;
         }
     }

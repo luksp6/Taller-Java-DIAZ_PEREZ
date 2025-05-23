@@ -65,13 +65,16 @@ public class Ejercicio5 extends Ejercicio
 
     private int obtenerPasos(char[][] mapa, int f, int c)
     {
+        //Recorrer el mapa para obtener la posición de entrada y los traslados de los portales
         Map<Character, Portal> portales = this.reconocerMapa(mapa, f, c);
+
+        //Inicializar en falso una matriz de celdas visitadas
         boolean[][] visitados = new boolean[f][c];
         for (int i = 0; i < f; i++)
             Arrays.fill(visitados[i], false);
         this.contador = 0;
         this.mejorContador = Integer.MAX_VALUE;
-        this.esSalida = false;
+        this.esSalida = false;        
         if (tieneSalida(mapa, f, c, this.entradaF, this.entradaC, visitados, portales))
             return this.mejorContador;
         else
@@ -82,45 +85,62 @@ public class Ejercicio5 extends Ejercicio
     {
         if (mapa[posF][posC] == 'S')
         {
+            //Si la posición actual es la salida
             if (this.contador < this.mejorContador)
+                //Incrementamos el contador de pasos si se encontró un camino más corto
                 this.mejorContador = this.contador;
+            //Retornamos verdadero
             return true;
         }
 
         if (mapa[posF][posC] == '#')
+            //Si la posición actual es una pared retornamos falso
             return false;
         else
         {
+            //Si la posición actual es una celda válida distinta a la salida, incrementamos el contador
+            //de pasos y marcamos la celda como visitada
             this.contador++;
             visitados[posF][posC] = true;
 
-            //Entrar portal
+            //Portal
             if(Character.isLowerCase(mapa[posF][posC]))
             {
+                //Si la celda actual es un portal, calculamos nuestra nueva posicion, verificamos no haberla visitado y nos transportamos
                 int posF_nueva = portales.get(mapa[posF][posC]).getF(posF);
                 int posC_nueva = portales.get(mapa[posF][posC]).getC(posC);
                 if (!visitados[posF_nueva][posC_nueva])
                     if (tieneSalida(mapa, limit_f, limit_c, posF_nueva, posC_nueva, visitados, portales)) this.esSalida = true;
             }
 
+            //Se evaluan los distintos movimientos. Si alguno conduce a la salida, se pone en verdadero el flag esSalida
+
             //Movimiento arriba
             if (posF - 1 >= 0 && !visitados[posF - 1][posC])
+                //Si la celda de arriba está dentro del mapa y no fue visitada, nos movemos a ella
                 if (tieneSalida(mapa, limit_f, limit_c, posF - 1, posC, visitados, portales)) this.esSalida = true;
 
             //Movimiento abajo
             if (posF + 1 < limit_f && !visitados[posF + 1][posC])
+                //Si la celda de abajo está dentro del mapa y no fue visitada, nos movemos a ella
                     if (tieneSalida(mapa, limit_f, limit_c, posF + 1, posC, visitados, portales)) this.esSalida = true;
 
             //Movimiento izquierda
             if (posC - 1 >= 0 && !visitados[posF][posC - 1])
+                //Si la celda de la izquierda está dentro del mapa y no fue visitada, nos movemos a ella
                     if (tieneSalida(mapa, limit_f, limit_c, posF, posC - 1, visitados, portales)) this.esSalida = true;
 
             //Movimiento derecha
             if (posC + 1 < limit_c && !visitados[posF][posC + 1])
+                //Si la celda de la derecha está dentro del mapa y no fue visitada, nos movemos a ella
                 if (tieneSalida(mapa, limit_f, limit_c, posF, posC + 1, visitados, portales)) this.esSalida = true;
 
+            //Decrementamos el contador de pasos y marcamos la celda como no visitada para que otras exploraciones
+            //puedan encontrar una posible salida más corta
             this.contador--;
             visitados[posF][posC] = false;
+
+            //Se retorna el flag esSalida
             return this.esSalida;
         }
     }
