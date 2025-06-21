@@ -1,0 +1,53 @@
+ACA ANOTAMOS LOS ERRORES Y CUAL FUE LA SOLUCION.
+
+Clase
+
+    Test 
+        Error
+        ----
+        Causa
+        ----
+        Solucion
+
+
+LogServiceTest
+
+    @Test
+    void addLogs()
+        Se agregaba el doble de elementos
+        ----
+        list.add(log) repetido
+        ----
+        Eliminar la linea repetida
+
+    @Test
+    void getLogsByUser()
+        Crear dos usuarios con el mismo nombre los trata como si fueran distintos, cuando el username
+        debe actuar como identificador
+        ----
+        Metodo equals sin definir en clase User
+        ----
+        Definir equals y hashcode en User segun name
+
+    @Test
+    void hasAllLogsConcurrent()
+        Error por querer hacer hashCode de un usuario sin nombre
+        ----
+        Constructor vacio de clase User no inicializa el campo name
+        ----
+        Inicializar name como un string vacio para evitar error por NullPointerException
+
+    @Test
+    void hasAllLogsConcurrent()
+        expected:<100000> but was:<99963>. No se agregan todas las acciones a los logs
+        ----
+        El metodo addLog y el HashMap logs en LogsService no eran thread-safe
+        ----
+        solucion 1:
+            Declarar el metodo addLog como synchronized y modificar la declaracion de logs de final a volatile.
+            Duracion de 1 ejecucion del test: 178 ms
+        solucion 2:
+            Declarar logs como un ConcurrentHashMap
+            Duracion de 1 ejecucion del test: 73 ms
+
+    

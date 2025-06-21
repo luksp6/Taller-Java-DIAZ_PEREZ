@@ -11,6 +11,7 @@ public class User {
     private String name;
 
     public User() {
+        this("", 0);
     }
 
     public User(String name) {
@@ -37,5 +38,20 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        //System.out.println("en hashcode. name = " + this.name + " id = " + this.id);
+        return this.name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        //System.out.println("en equals. this.name = " + this.name + " this.id = " + this.id);
+        //System.out.println("en equals. obj.name = " + ((User) obj).getName() + " obj.id = " + ((User) obj).getId());
+        return (this.name.equals(((User) obj).getName()));
     }
 }

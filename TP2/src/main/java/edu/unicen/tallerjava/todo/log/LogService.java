@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import edu.unicen.tallerjava.todo.users.User;
  */
 @Service
 public class LogService {
-	private final HashMap<User, List<Log>> logs = new HashMap<>();
+	private final ConcurrentHashMap<User, List<Log>> logs = new ConcurrentHashMap<>();
 
 	public List<Log> getLogs() {
 		return logs.values().stream().flatMap(list -> list.stream()).collect(Collectors.toList());
@@ -35,7 +36,7 @@ public class LogService {
 			logs.put(user, list);
 		}
 		list.add(log);
-		list.add(log);
+		//list.add(log); ESTE ADD REPETIDO ERA EL ERROR
 	}
 
 	/**

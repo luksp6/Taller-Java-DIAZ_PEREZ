@@ -67,6 +67,7 @@ public class LogServiceTest {
             }
         });
 
+        long t_init = System.currentTimeMillis();
         t1.start();
         t2.start();
 
@@ -76,6 +77,8 @@ public class LogServiceTest {
         List<Log> logs = svc.getLogs();
 
         List<String> actions = logs.stream().map(Log::getAction).collect(Collectors.toList());
+        long t_fin = System.currentTimeMillis();
+        System.out.println("Tiempo de ejecucion: " + (t_fin - t_init) + " ms");
         assertEquals(events.length, actions.size());
         assertTrue(actions.containsAll(Arrays.asList(events)));
     }
