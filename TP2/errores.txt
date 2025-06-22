@@ -80,7 +80,6 @@ LogServiceTest
             ----
             En el metodo login se manejaba mal el incremento del id al momento de crear la instancia del nuevo usuario
             ----
-            solucion:
                 remplazar
                     int lastId = last == null ? 0 : last.getId();
                     lastId = lastId++;
@@ -88,4 +87,22 @@ LogServiceTest
                 por
                     int lastId = last == null ? 0 : last.getId();
                     User user = new User(name, lastId + 1);
+
+        @Test
+        void testAddNullUser()
+            Error al guardar un usuario null en la base de datos
+            ----
+            No se verifica que el usuario sea distinto de null antes de guardarlo
+            ----
+            Verificar que el usuario no sea null en User addUser(User user)
+
+            public User addUser(User user) {
+                if (user != null)
+                {
+                    logSvc.addLog("Se agregó el usuario " + user.getName(), user);
+                    return this.repo.save(user);
+                }
+                else
+                    return user;
+            }
     

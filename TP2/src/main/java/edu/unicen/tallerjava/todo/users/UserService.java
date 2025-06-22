@@ -41,8 +41,13 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        logSvc.addLog("Se agregó el usuario " + user.getName(), user);
-        return this.repo.save(user);
+        if (user != null)
+        {
+            logSvc.addLog("Se agregó el usuario " + user.getName(), user);
+            return this.repo.save(user);
+        }
+        else
+            return user;
     }
 
     public void clearUsers() {
