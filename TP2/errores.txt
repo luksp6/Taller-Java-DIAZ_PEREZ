@@ -9,7 +9,6 @@ Clase
         ----
         Solucion
 
-
 LogServiceTest
 
     @Test
@@ -72,6 +71,10 @@ LogServiceTest
             ----
             Promedio: 185 ms
 
+
+    ejcucion solucion1 solucion 2
+
+
     UserServiceTest
 
         @Test
@@ -114,3 +117,52 @@ LogServiceTest
             ----
             Modificar el metodo para que los retorne ordenados por name
     
+    CurrentUserService
+
+        @Test
+        void testGetsDefaultUser()
+            El usuario por defecto es null
+            ----
+            En el metodo getCurrent, esta mal la comparacion por null. Crea un usuario si el actual no es null
+            ----
+            viejo:
+
+            public User getCurrent() {
+                if (current != null) ERROR
+                    current = new User();
+                return current;
+            }
+
+            nuevo:
+
+            public User getCurrent() {
+                if (current == null)
+                    current = new User();
+                return current;
+            }
+
+        @Test
+        void testCurrentConcurrent()
+            Al acceder concurrentemente los distintos hilos no obtenian la misma instancia
+            ----
+            El metodo getCurrent no era thread-safe
+            ----
+            Definir el metodo como synchronized
+
+TodoServiceTest
+
+    @Test
+     void testCreateTodo()
+        El nuevo ToDo no tiene contenido
+        ----
+        No se asigna el contenido recibido en createNewToDo al momento de crearlo
+        ----
+        Asignar el campo content al nuevo ToDo
+
+    @Test
+     void testTimerDelete()
+        Borra los todos con tiempo MENOR al especificado
+        ----
+        La comparacion estaba al reves
+        ----
+        Corregir la comparacion

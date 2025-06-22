@@ -70,11 +70,9 @@ public class UserServiceTest {
     @Test
     public void testSortedByName() {
         List<User> listOfUsersAdded = userService.getUsers();
-        System.out.println("list of users: " + listOfUsersAdded);
         List<User> sorted = Arrays.asList(users);
 
         Collections.sort(sorted, Comparator.comparing(User::getName));
-        System.out.println("sorted: " + sorted);
         for (int i = 0; i < users.length; i++) {
             assertEquals(sorted.get(i), listOfUsersAdded.get(i));
         }
