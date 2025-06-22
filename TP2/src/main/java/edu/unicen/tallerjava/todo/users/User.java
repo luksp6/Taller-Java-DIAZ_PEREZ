@@ -54,4 +54,9 @@ public class User {
         //System.out.println("en equals. obj.name = " + ((User) obj).getName() + " obj.id = " + ((User) obj).getId());
         return (this.name.equals(((User) obj).getName()));
     }
+
+    public String toString()
+    {
+        return this.name;
+    }
 }

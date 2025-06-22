@@ -105,4 +105,12 @@ LogServiceTest
                 else
                     return user;
             }
+
+        @Test
+        void testSortedByName()
+            El ordenamiento es diferente
+            ----
+            El metodo getUsers de UserService ordena los usuarios segun su id
+            ----
+            Modificar el metodo para que los retorne ordenados por name
     
