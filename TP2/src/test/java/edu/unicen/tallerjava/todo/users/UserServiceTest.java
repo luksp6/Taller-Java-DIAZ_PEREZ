@@ -96,6 +96,9 @@ public class UserServiceTest {
         User a = userService.login("A");
         User b = userService.login("B");
         User c = userService.login("C");
+        System.out.println(a.getId());
+        System.out.println(b.getId());
+        System.out.println(c.getId());
 
         // Arrancan en nueve porque ya hay 8 usuarios guardados.
         assertTrue(a.getId().equals(9));

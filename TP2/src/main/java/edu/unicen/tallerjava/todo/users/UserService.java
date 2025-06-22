@@ -60,8 +60,8 @@ public class UserService {
     public User login(String name) {
         User last = repo.findFirstByOrderByIdDesc().orElse(null);
         int lastId = last == null ? 0 : last.getId();
-        lastId = lastId++;
-        User user = new User(name, lastId);
+        //lastId = lastId++; aca el error
+        User user = new User(name, lastId + 1);
         currentSvc.setCurrent(user);
         return addUser(user);
     }

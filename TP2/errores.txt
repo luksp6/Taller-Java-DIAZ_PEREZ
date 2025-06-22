@@ -72,4 +72,20 @@ LogServiceTest
             ----
             Promedio: 185 ms
 
+    UserServiceTest
+
+        @Test
+        void testLoginUser()
+            No se mantiene la incrementabilidad en los ids de los usuarios en el login
+            ----
+            En el metodo login se manejaba mal el incremento del id al momento de crear la instancia del nuevo usuario
+            ----
+            solucion:
+                remplazar
+                    int lastId = last == null ? 0 : last.getId();
+                    lastId = lastId++;
+                    User user = new User(name, lastId);
+                por
+                    int lastId = last == null ? 0 : last.getId();
+                    User user = new User(name, lastId + 1);
     
