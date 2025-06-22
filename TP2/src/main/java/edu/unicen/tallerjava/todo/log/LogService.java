@@ -1,6 +1,7 @@
 package edu.unicen.tallerjava.todo.log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,8 @@ import edu.unicen.tallerjava.todo.users.User;
  */
 @Service
 public class LogService {
+	//private final HashMap<User, List<Log>> logs = new HashMap<>();
+	//private volatile HashMap<User, List<Log>> logs = new HashMap<>();
 	private final ConcurrentHashMap<User, List<Log>> logs = new ConcurrentHashMap<>();
 
 	public List<Log> getLogs() {
@@ -29,10 +32,12 @@ public class LogService {
 	 * @param user   El usuario que generó la acción
 	 */
 	public void addLog(String action, User user) {
+	//public synchronized void addLog(String action, User user) {
 		Log log = new Log(UUID.randomUUID(), action, user);
 		List<Log> list = logs.get(user);
 		if (list == null) {
-			list = new ArrayList<>();
+			//list = new ArrayList<>();
+			list = Collections.synchronizedList(new ArrayList<>());
 			logs.put(user, list);
 		}
 		list.add(log);

@@ -45,9 +45,31 @@ LogServiceTest
         ----
         solucion 1:
             Declarar el metodo addLog como synchronized y modificar la declaracion de logs de final a volatile.
-            Duracion de 1 ejecucion del test: 178 ms
+            Duracion de ejecucion 1 del test: 247 ms
+            Duracion de ejecucion 2 del test: 237 ms
+            Duracion de ejecucion 3 del test: 291 ms
+            Duracion de ejecucion 4 del test: 252 ms
+            Duracion de ejecucion 5 del test: 235 ms
+            Duracion de ejecucion 6 del test: 266 ms
+            Duracion de ejecucion 7 del test: 265 ms
+            Duracion de ejecucion 8 del test: 382 ms
+            Duracion de ejecucion 9 del test: 242 ms
+            Duracion de ejecucion 10 del test: 186 ms
+            ----
+            Promedio: 260 ms
         solucion 2:
-            Declarar logs como un ConcurrentHashMap
-            Duracion de 1 ejecucion del test: 73 ms
+            Declarar logs como un ConcurrentHashMap, y la lista que almacena como Collections.synchronizedList()
+            Duracion de ejecucion 1 del test: 145 ms
+            Duracion de ejecucion 2 del test: 185 ms
+            Duracion de ejecucion 3 del test: 183 ms
+            Duracion de ejecucion 4 del test: 209 ms
+            Duracion de ejecucion 5 del test: 184 ms
+            Duracion de ejecucion 6 del test: 167 ms
+            Duracion de ejecucion 7 del test: 282 ms
+            Duracion de ejecucion 8 del test: 166 ms
+            Duracion de ejecucion 9 del test: 149 ms
+            Duracion de ejecucion 10 del test: 181 ms
+            ----
+            Promedio: 185 ms
 
     
