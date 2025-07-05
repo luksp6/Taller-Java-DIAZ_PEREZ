@@ -1,0 +1,14 @@
+target/
+!src/main/resources/
+!src/test/resources/
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+release.properties
+
+.project
+.classpath
+.settings/
+
+.vscode/
