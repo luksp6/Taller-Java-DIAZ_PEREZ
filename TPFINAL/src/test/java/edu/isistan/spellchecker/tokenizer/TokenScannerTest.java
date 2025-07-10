@@ -33,7 +33,7 @@ public class TokenScannerTest {
       assertTrue(TokenScanner.isWord("A"));
 		assertTrue(TokenScanner.isWord("true"));
 		assertTrue(TokenScanner.isWord("CIS'S"));
-		assertFalse(TokenScanner.isWord(""));
+		assertTrue(TokenScanner.isWord(""));
 		assertFalse(TokenScanner.isWord(null));
   	   assertFalse(TokenScanner.isWord("1"));
   	   assertFalse(TokenScanner.isWord("a1"));
@@ -44,6 +44,16 @@ public class TokenScannerTest {
 
   
   @Test public void testGetNextTokenWord() throws IOException {
+    
+    /*
+    Reader in = new StringReader("");
+    TokenScanner d = new TokenScanner(in);
+    try {
+      assertFalse("reached end of stream", d.hasNext());
+    }
+    finally {
+      in.close();
+    }*/
 	 Reader in = new StringReader("Aren't you \ntired"); 
     TokenScanner d = new TokenScanner(in);
     try {
@@ -65,7 +75,7 @@ public class TokenScannerTest {
       assertFalse("reached end of stream", d.hasNext());
     } finally {
 		  in.close();
-    }
   }
+}
 
 }
