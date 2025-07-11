@@ -1,8 +1,12 @@
 package edu.isistan.spellchecker.corrector.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Corrector;
+import edu.isistan.spellchecker.tokenizer.TokenScanner;
 
 import java.io.*;
 
@@ -13,7 +17,7 @@ import java.io.*;
 public class FileCorrector extends Corrector {
 
 	/** Clase especial que se utiliza al tener 
-	 * algún error de formato en el archivo de entrada.
+	 * algï¿½n error de formato en el archivo de entrada.
 	 */
 	public static class FormatException extends Exception {
 		public FormatException(String msg) {
@@ -21,14 +25,16 @@ public class FileCorrector extends Corrector {
 		}
 	}
 
+	private Map<String, Set<String>> corrector;
+
 
 	/**
 	 * Constructor del FileReader
 	 *
-	 * Utilice un BufferedReader para leer el archivo de definición
+	 * Utilice un BufferedReader para leer el archivo de definiciï¿½n
 	 *
 	 * <p> 
-	 * Cada línea del archivo del diccionario tiene el siguiente formato: 
+	 * Cada lï¿½nea del archivo del diccionario tiene el siguiente formato: 
 	 * misspelled_word,corrected_version
 	 *
 	 * <p>
@@ -42,7 +48,7 @@ public class FileCorrector extends Corrector {
 	 * ther,there<br>
 	 * </pre>
 	 * <p>
-	 * Estas líneas no son case-insensitive, por lo que todas deberían generar el mismo efecto:<br>
+	 * Estas lï¿½neas no son case-insensitive, por lo que todas deberï¿½an generar el mismo efecto:<br>
 	 * <pre>
 	 * baloon,balloon<br>
 	 * Baloon,balloon<br>
@@ -62,7 +68,7 @@ public class FileCorrector extends Corrector {
 	 * Los espacios son permitidos dentro de las sugerencias. 
 	 *
 	 * <p>
-	 * Debería arrojar <code>FileCorrector.FormatException</code> si se encuentra algún
+	 * Deberï¿½a arrojar <code>FileCorrector.FormatException</code> si se encuentra algï¿½n
 	 * error de formato:<br>
 	 * <pre>
 	 * ,correct<br>
@@ -77,8 +83,33 @@ public class FileCorrector extends Corrector {
 	 * @throws FileCorrector.FormatException error de formato
 	 * @throws IllegalArgumentException reader es null
 	 */
-	public FileCorrector(Reader r) throws IOException, FormatException {
-
+	public FileCorrector(Reader r) throws IOException, FormatException, IllegalArgumentException {
+		if (r == null)
+			throw new IllegalArgumentException();
+		BufferedReader br = new BufferedReader(r);
+		this.corrector = new HashMap<>();
+		try {
+			String linea = br.readLine();
+			while (linea != null)
+			{
+				String[] linea_partida = verificarFormato(linea);
+				String clave = normalizar(linea_partida[0]);
+				String valor = linea_partida[1];
+				if (corrector.keySet().contains(clave))
+					corrector.get(clave).add(valor);
+				else
+				{
+					Set<String> s = new HashSet<String>();
+					s.add(valor);
+					corrector.put(clave, s);
+				}
+				linea = br.readLine();
+			}
+			
+		} catch (Exception e)
+		{
+			throw e;
+		}
 	}
 
 	/** Construye el Filereader.
@@ -101,15 +132,43 @@ public class FileCorrector extends Corrector {
 
 	/**
 	 * Retorna una lista de correcciones para una palabra dada.
-	 * Si la palabra mal escrita no está en el diccionario el set es vacio.
+	 * Si la palabra mal escrita no estï¿½ en el diccionario el set es vacio.
 	 * <p>
 	 * Ver superclase.
 	 *
 	 * @param wrong 
-	 * @return retorna un conjunto (potencialmente vacío) de sugerencias.
-	 * @throws IllegalArgumentException si la entrada no es una palabra válida 
+	 * @return retorna un conjunto (potencialmente vacï¿½o) de sugerencias.
+	 * @throws IllegalArgumentException si la entrada no es una palabra vï¿½lida 
 	 */
 	public Set<String> getCorrections(String wrong) {
-		return null;
+		if (!TokenScanner.isWord(wrong))
+			throw new IllegalArgumentException("Palabra invalida: " + wrong);
+		Set<String> salida = new HashSet<String>();
+		String normalizada = normalizar(wrong);
+		if (corrector.get(normalizada) != null)
+		{
+			System.out.println("Entrada entera: " + corrector.get(normalizada));
+			for (String correccion : corrector.get(normalizada))
+			{
+				System.out.println("Correccion: " + correccion);
+				salida.add(new String(correccion));
+			}
+		}
+		return matchCase(wrong, salida);
+	}
+
+	private String normalizar(String palabra)
+	{
+		return palabra.trim().toUpperCase();
+	}
+
+	private String[] verificarFormato(String linea) throws FormatException
+	{
+		System.out.println("entrada: " + linea);
+		String[] salida = linea.split(",");
+		if (salida.length == 2)
+			return salida;
+		else
+			throw new FormatException("Formato incorrecto: " + linea);
 	}
 }

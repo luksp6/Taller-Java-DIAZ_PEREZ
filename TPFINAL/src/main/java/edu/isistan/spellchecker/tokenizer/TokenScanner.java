@@ -49,13 +49,13 @@ public class TokenScanner implements Iterator<String> {
    * Determina si un string es una palabra v�lida.
    * Null no es una palabra v�lida.
    * Un string que todos sus caracteres son v�lidos es una 
-   * palabra. Por lo tanto, el string vac�o es una palabra v�lida.
+   * palabra. Por lo tanto, el string vac�o NO es una palabra v�lida.
    * @param s 
    * @return true si el string es una palabra.
    */
   public static boolean isWord(String s)
   {
-    if (s == null)
+    if (s == null || s.length() == 0)
       return false;
     for (int i = 0; i < s.length(); i++)
       if (!isWordCharacter(s.charAt(i)))
