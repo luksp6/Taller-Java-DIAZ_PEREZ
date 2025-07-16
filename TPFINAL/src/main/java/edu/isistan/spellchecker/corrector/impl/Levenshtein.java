@@ -44,35 +44,66 @@ public class Levenshtein extends Corrector {
 	 * @param s palabra
 	 * @return todas las palabras a erase distance uno
 	 */
-	Set<String> getDeletions(String s) {
-		throw new UnsupportedOperationException(); // STUB
+	Set<String> getDeletions(String wrong)
+	{
+		Set<String> output = new HashSet<>();
+		String normalizada = normalizar(wrong);
+		for (int i = 0; i < normalizada.length(); i++)
+		{
+			String suggestion = normalizada.substring(0, i) + normalizada.substring(i + 1);
+			if (this.dict.isWord(suggestion))
+				output.add(suggestion);
+		}
+		return matchCase(wrong, output);
 	}
 
 	/**
 	 * @param s palabra
 	 * @return todas las palabras a substitution distance uno
 	 */
-	public Set<String> getSubstitutions(String s) {
-		throw new UnsupportedOperationException(); // STUB
+	public Set<String> getSubstitutions(String wrong)
+	{
+		Set<String> output = new HashSet<>();
+		String normalizada = normalizar(wrong);
+		for (int i = 0; i < normalizada.length(); i++)
+			for (char c = 'A'; c <= 'Z'; c++)
+			{
+				String suggestion = normalizada.substring(0, i) + c + normalizada.substring(i + 1);
+				if (this.dict.isWord(suggestion) && !suggestion.equalsIgnoreCase(wrong))
+					output.add(suggestion);
+			}
+		return matchCase(wrong, output);
 	}
-
 
 	/**
 	 * @param s palabra
 	 * @return todas las palabras a insert distance uno
 	 */
-	public Set<String> getInsertions(String s) {
-		throw new UnsupportedOperationException(); // STUB
+	public Set<String> getInsertions(String wrong)
+	{
+		Set<String> output = new HashSet<>();
+		String normalizada = normalizar(wrong);
+		for (int i = 0; i <= normalizada.length(); i++)
+			for (char c = 'A'; c <= 'Z'; c++)
+			{
+				String suggestion = normalizada.substring(0, i) + c + normalizada.substring(i);
+				if (this.dict.isWord(suggestion))
+					output.add(suggestion);
+			}
+		return matchCase(wrong, output);
 	}
 
 	public Set<String> getCorrections(String wrong) {
 		if (!TokenScanner.isWord(wrong))
 			throw new IllegalArgumentException("Palabra invalida: " + wrong);
 		Set<String> salida = new HashSet<String>();
-		String normalizada = normalizar(wrong);
-		salida.addAll(getSubstitutions(normalizada));
-		salida.addAll(getInsertions(normalizada));
-		salida.addAll(getDeletions(normalizada));
-		return matchCase(wrong, salida);
+		if (!this.dict.isWord(wrong))
+		{
+			salida.addAll(getSubstitutions(wrong));
+			salida.addAll(getInsertions(wrong));
+			salida.addAll(getDeletions(wrong));
+		}
+		return salida;
 	}
+
 }
