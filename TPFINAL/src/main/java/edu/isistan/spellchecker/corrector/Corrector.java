@@ -5,10 +5,10 @@ import java.util.Set;
 /**
  * Esqueleto de las clases Corrector.
  * <p>
- * El método matchCase es compartido por todas las classes Correctors.
+ * El mï¿½todo matchCase es compartido por todas las classes Correctors.
  * <p>
- * Implementaciones concretas deben implementar el método getCorrections
- * que en general invocará al método matchCase.
+ * Implementaciones concretas deben implementar el mï¿½todo getCorrections
+ * que en general invocarï¿½ al mï¿½todo matchCase.
  */
 public abstract class Corrector {
 
@@ -19,7 +19,7 @@ public abstract class Corrector {
 	 * 
 	 * @param incorrectWord palabra a corregir
 	 * @param corrections correciones sugeridas
-	 * @return correcciones sugeridas con la correcta capitalización
+	 * @return correcciones sugeridas con la correcta capitalizaciï¿½n
 	 */
 	public Set<String> matchCase(String incorrectWord, Set<String> corrections) {
 		if (incorrectWord == null || corrections == null) {
@@ -39,15 +39,20 @@ public abstract class Corrector {
 		return revisedSet;
 	}
 
+	public String normalizar(String palabra)
+	{
+		return palabra.trim().toUpperCase();
+	}
+
 	/**
 	 * Retoran una lista de sugerencias para una palabra mal escrita.
 	 * <p>
-	 * Si la entrada no es una palabra válida (por ejemplo es un número)
+	 * Si la entrada no es una palabra vï¿½lida (por ejemplo es un nï¿½mero)
 	 * debe arrojar IllegalArgumentException. 
 	 *
 	 * @param wrong 
-	 * @return retorna un conjunto (potencialmente vacío) de sugerencias.
-	 * @throws IllegalArgumentException si la entrada no es una palabra válida 
+	 * @return retorna un conjunto (potencialmente vacï¿½o) de sugerencias.
+	 * @throws IllegalArgumentException si la entrada no es una palabra vï¿½lida 
 	 */
 	public abstract Set<String> getCorrections(String wrong);
 }

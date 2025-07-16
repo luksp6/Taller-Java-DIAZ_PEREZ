@@ -4,13 +4,14 @@ import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Corrector;
 import edu.isistan.spellchecker.corrector.Dictionary;
+import edu.isistan.spellchecker.tokenizer.TokenScanner;
 
 /**
  *
  * Un corrector inteligente que utiliza "edit distance" para generar correcciones.
  * 
- * La distancia de Levenshtein es el número minimo de ediciones que se deber
- * realizar a un string para igualarlo a otro. Por edición se entiende:
+ * La distancia de Levenshtein es el nï¿½mero minimo de ediciones que se deber
+ * realizar a un string para igualarlo a otro. Por ediciï¿½n se entiende:
  * <ul>
  * <li> insertar una letra
  * <li> borrar una letra
@@ -18,12 +19,14 @@ import edu.isistan.spellchecker.corrector.Dictionary;
  * </ul>
  *
  * Una "letra" es un caracter a-z (no contar los apostrofes).
- * Intercambiar letras (thsi -> this) <it>no</it> cuenta como una edición.
+ * Intercambiar letras (thsi -> this) <it>no</it> cuenta como una ediciï¿½n.
  * <p>
  * Este corrector sugiere palabras que esten a edit distance uno.
  */
 public class Levenshtein extends Corrector {
 
+
+	private final Dictionary dict;
 
 	/**
 	 * Construye un Levenshtein Corrector usando un Dictionary.
@@ -31,8 +34,10 @@ public class Levenshtein extends Corrector {
 	 *
 	 * @param dict
 	 */
-	public Levenshtein(Dictionary dict) {
-		throw new UnsupportedOperationException(); // STUB
+	public Levenshtein(Dictionary dict) throws IllegalArgumentException {
+		if (dict == null)
+			throw new IllegalArgumentException();
+		this.dict = dict;
 	}
 
 	/**
@@ -61,6 +66,13 @@ public class Levenshtein extends Corrector {
 	}
 
 	public Set<String> getCorrections(String wrong) {
-		throw new UnsupportedOperationException(); // STUB
+		if (!TokenScanner.isWord(wrong))
+			throw new IllegalArgumentException("Palabra invalida: " + wrong);
+		Set<String> salida = new HashSet<String>();
+		String normalizada = normalizar(wrong);
+		salida.addAll(getSubstitutions(normalizada));
+		salida.addAll(getInsertions(normalizada));
+		salida.addAll(getDeletions(normalizada));
+		return matchCase(wrong, salida);
 	}
 }

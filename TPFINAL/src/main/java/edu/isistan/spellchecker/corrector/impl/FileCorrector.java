@@ -157,11 +157,6 @@ public class FileCorrector extends Corrector {
 		return matchCase(wrong, salida);
 	}
 
-	private String normalizar(String palabra)
-	{
-		return palabra.trim().toUpperCase();
-	}
-
 	private String[] verificarFormato(String linea) throws FormatException
 	{
 		System.out.println("entrada: " + linea);
