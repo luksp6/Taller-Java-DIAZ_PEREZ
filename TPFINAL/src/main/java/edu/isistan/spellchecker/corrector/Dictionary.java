@@ -17,6 +17,12 @@ public class Dictionary {
 
 	private Set<String> palabras;
 
+	public Set<String> getPalabras() {
+		Set<String> salida = new HashSet<>();
+		salida.addAll(palabras);
+		return salida;
+	}
+
 	/**
 	 * Construye un diccionario usando un TokenScanner
 	 * <p>
