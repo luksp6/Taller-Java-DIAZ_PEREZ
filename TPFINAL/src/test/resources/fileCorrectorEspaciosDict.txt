@@ -1,0 +1,6 @@
+    rojp,rojo
+azil    ,azul
+amarikko,    amarillo
+maranja,naranja      
+   bioleta   ,    violeta   
+rojp,roja 

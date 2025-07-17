@@ -103,12 +103,10 @@ public class TokenScanner implements Iterator<String> {
       }
       catch (IOException e)
       {
-        System.out.println("token scanner retorna null");
-        System.out.println(e);
         return null;
       }
     }
     else
-      throw new NoSuchElementException();
+      throw new NoSuchElementException("Se llego al final");
   }
 }

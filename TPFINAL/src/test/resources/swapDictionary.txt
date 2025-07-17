@@ -1,0 +1,6 @@
+rojo
+azul
+amarillo
+naranja
+violeta
+verde

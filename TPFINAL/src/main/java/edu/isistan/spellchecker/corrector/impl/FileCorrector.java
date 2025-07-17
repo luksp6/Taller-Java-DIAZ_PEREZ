@@ -94,7 +94,7 @@ public class FileCorrector extends Corrector {
 			{
 				String[] linea_partida = verificarFormato(linea);
 				String clave = normalizar(linea_partida[0]);
-				String valor = linea_partida[1];
+				String valor = normalizar(linea_partida[1]);
 				if (corrector.keySet().contains(clave))
 					corrector.get(clave).add(valor);
 				else
