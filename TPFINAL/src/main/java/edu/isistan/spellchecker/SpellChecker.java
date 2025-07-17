@@ -95,8 +95,7 @@ public class SpellChecker {
 		Scanner sc = new Scanner(input);
 		corregirDocumento(in, sc, out);
 		System.out.println("Presione cualquier tecla para salir.");
-		getNextString(sc);
-		
+		//getNextString(sc);		
 	}
 
 	private void corregirDocumento(Reader in, Scanner sc, Writer out) throws IllegalArgumentException, IOException
@@ -112,6 +111,7 @@ public class SpellChecker {
 				System.out.println("TOKEN: " + token);
 				if (TokenScanner.isWord(token) && !this.dict.isWord(token))
 				{
+					System.out.println("Entra al if");
 					List<String> correcciones = new ArrayList<>(this.corr.getCorrections(token));
 					if (correcciones.size() > 0)
 					{
@@ -129,8 +129,11 @@ public class SpellChecker {
 		}
 		catch (Exception e)
 		{
-			output.close();
 			throw e;
+		}
+		finally
+		{
+			output.flush();
 		}
 	}
 }

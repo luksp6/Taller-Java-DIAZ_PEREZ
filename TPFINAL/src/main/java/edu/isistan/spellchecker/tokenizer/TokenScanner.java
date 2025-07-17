@@ -29,7 +29,7 @@ public class TokenScanner implements Iterator<String> {
     if (in == null)
       throw new IllegalArgumentException();
     this.in = new BufferedReader(in);
-    this.ch = 0;//this.in.read();
+    this.ch = this.in.read();
   }
 
   /**
