@@ -1,16 +1,20 @@
 package edu.isistan.spellchecker;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Corrector;
 import edu.isistan.spellchecker.corrector.Dictionary;
+import edu.isistan.spellchecker.tokenizer.TokenScanner;
 
 /**
  * El SpellChecker usa un Dictionary, un Corrector, and I/O para chequear
@@ -20,7 +24,7 @@ import edu.isistan.spellchecker.corrector.Dictionary;
  * <p>
  * Nota:
  * <ul>
- * <li> La implementación provista provee métodos utiles para implementar el SpellChecker.
+ * <li> La implementaciï¿½n provista provee mï¿½todos utiles para implementar el SpellChecker.
  * <li> Toda la salida al usuario deben enviarse a System.out (salida estandar)
  * </ul>
  * <p>
@@ -43,8 +47,8 @@ public class SpellChecker {
 	}
 
 	/**
-	 * Returna un entero desde el Scanner provisto. El entero estará en el rango [min, max].
-	 * Si no se ingresa un entero o este está fuera de rango, repreguntará.
+	 * Returna un entero desde el Scanner provisto. El entero estarï¿½ en el rango [min, max].
+	 * Si no se ingresa un entero o este estï¿½ fuera de rango, repreguntarï¿½.
 	 *
 	 * @param min
 	 * @param max
@@ -85,11 +89,48 @@ public class SpellChecker {
 	 * @param in stream donde se encuentra el documento de entrada.
 	 * @param input entrada interactiva del usuario. Por ejemplo, entrada estandar System.in
 	 * @param out stream donde se escribe el documento de salida.
-	 * @throws IOException si se produce algún error leyendo el documento.
+	 * @throws IOException si se produce algï¿½n error leyendo el documento.
 	 */
 	public void checkDocument(Reader in, InputStream input, Writer out) throws IOException {
 		Scanner sc = new Scanner(input);
+		corregirDocumento(in, sc, out);
+		System.out.println("Presione cualquier tecla para salir.");
+		getNextString(sc);
+		
+	}
 
-		// STUB
+	private void corregirDocumento(Reader in, Scanner sc, Writer out) throws IllegalArgumentException, IOException
+	{
+		TokenScanner ts = new TokenScanner(in);
+		BufferedWriter output = new BufferedWriter(out);
+
+		try
+		{
+			while (ts.hasNext())
+			{
+				String token = ts.next();
+				System.out.println("TOKEN: " + token);
+				if (TokenScanner.isWord(token) && !this.dict.isWord(token))
+				{
+					List<String> correcciones = new ArrayList<>(this.corr.getCorrections(token));
+					if (correcciones.size() > 0)
+					{
+						System.out.println("La palabra \"" + token + "\" tiene las siguientes correcciones:");
+						for (int i = 0; i < correcciones.size(); i++)
+							System.out.println("[" + i + "] " + correcciones.get(i));
+						System.out.println("Seleccione el Ã­ndice de la correcciÃ³n deseada.");
+						//int entradaUsuario = getNextInt(0, correcciones.size() -1, sc);
+						int entradaUsuario = 0;
+						token = correcciones.get(entradaUsuario);
+					}
+				}
+				output.write(token);
+			}
+		}
+		catch (Exception e)
+		{
+			output.close();
+			throw e;
+		}
 	}
 }

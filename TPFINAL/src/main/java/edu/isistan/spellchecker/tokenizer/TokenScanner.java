@@ -29,7 +29,7 @@ public class TokenScanner implements Iterator<String> {
     if (in == null)
       throw new IllegalArgumentException();
     this.in = new BufferedReader(in);
-    this.ch = this.in.read();
+    this.ch = 0;//this.in.read();
   }
 
   /**
@@ -67,14 +67,7 @@ public class TokenScanner implements Iterator<String> {
    * Determina si hay otro token en el reader.
    */
   public boolean hasNext(){
-    try {
-        if (this.ch < 0)
-          return false;
-        else
-          return this.in.ready();
-    } catch (IOException e) {
-      return false;
-    }
+        return (this.ch >= 0);
   }
 
   /**
@@ -85,7 +78,7 @@ public class TokenScanner implements Iterator<String> {
   public String next() throws NoSuchElementException{
     if (hasNext())
     {
-      String token = "";
+      String token = "";      
       try
       {
         while (isWordCharacter(ch))
@@ -102,12 +95,16 @@ public class TokenScanner implements Iterator<String> {
               ch = this.in.read();
             }
         }
-        if(token.equals("")) 
-          token += (char) ch;
+        if(token.equals("")) {
+          token += (char) ch;        
+            ch = this.in.read();
+          }
         return token;
       }
       catch (IOException e)
       {
+        System.out.println("token scanner retorna null");
+        System.out.println(e);
         return null;
       }
     }

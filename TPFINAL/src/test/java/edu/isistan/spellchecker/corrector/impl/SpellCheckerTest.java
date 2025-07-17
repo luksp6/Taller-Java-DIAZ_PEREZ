@@ -31,13 +31,14 @@ public class SpellCheckerTest {
 			String fdoc, String fout, String finput) 
 					throws IOException, FileCorrector.FormatException
 	{
-		Dictionary dict = Dictionary.make(fdict);
+		String inicioRuta = "src\\test\\resources\\";
+		Dictionary dict = Dictionary.make(inicioRuta+fdict);
 
 		Corrector corr = null;
 		if (fcorr == null) {
 			corr = new SwapCorrector(dict);
 		} else {
-			corr = FileCorrector.make(fcorr);
+			corr = FileCorrector.make(inicioRuta+fcorr);
 		}
 
 
@@ -45,9 +46,9 @@ public class SpellCheckerTest {
 			assertEquals("Dictionary size = " + dictSize, dictSize,
 					dict.getNumWords());
 
-		FileInputStream input = new FileInputStream(finput);
-		Reader in = new BufferedReader(new FileReader(fdoc));
-		Writer out = new BufferedWriter(new FileWriter(fout));
+		FileInputStream input = new FileInputStream(inicioRuta+finput);
+		Reader in = new BufferedReader(new FileReader(inicioRuta+fdoc));
+		Writer out = new BufferedWriter(new FileWriter(inicioRuta+fout));
 
 		SpellChecker sc = new SpellChecker(corr,dict);
 
@@ -63,14 +64,14 @@ public class SpellCheckerTest {
 	@Test(timeout=500) public void testCheckFoxGood() throws IOException, FileCorrector.FormatException {
 		spellCheckFiles("theFoxDictionary.txt",7,"theFoxMisspellings.txt",
 				"theFox.txt","foxout.txt","theFox_goodinput.txt");
-		compareDocs("foxout.txt", "theFox_expected_output.txt");
+		compareDocs("src\\test\\resources\\"+"foxout.txt", "src\\test\\resources\\"+"theFox_expected_output.txt");
 	}
 
 
 	@Test(timeout=500) public void testCheckMeanInput() throws IOException, FileCorrector.FormatException {
 		spellCheckFiles("theFoxDictionary.txt",7,"theFoxMisspellings.txt",
 				"theFox.txt","foxout.txt","theFox_meaninput.txt");
-		compareDocs("foxout.txt", "theFox_expected_output.txt");
+		compareDocs("src\\test\\resources\\"+"foxout.txt", "src\\test\\resources\\"+"theFox_expected_output.txt");
 	}
 
 
@@ -79,7 +80,7 @@ public class SpellCheckerTest {
 		spellCheckFiles("dictionary.txt",60822,null,
 				"Gettysburg.txt","Gettysburg-out.txt",
 				"Gettysburg_input.txt");
-		compareDocs("Gettysburg-out.txt", "Gettysburg_expected_output.txt");
+		compareDocs("src\\test\\resources\\"+"Gettysburg-out.txt", "src\\test\\resources\\"+"Gettysburg_expected_output.txt");
 	}
 
 

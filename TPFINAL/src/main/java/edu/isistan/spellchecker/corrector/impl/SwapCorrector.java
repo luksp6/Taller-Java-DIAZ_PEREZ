@@ -18,7 +18,6 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
  * Solo cambio de letras contiguas se considera como swap.
  */
 public class SwapCorrector extends Corrector {
-	private LSH swap;
 	private final Dictionary dict;
 	/**
 	 * Construcye el SwapCorrector usando un Dictionary.
@@ -29,7 +28,6 @@ public class SwapCorrector extends Corrector {
 	public SwapCorrector(Dictionary dict) {
 		if (dict == null)
 			throw new IllegalArgumentException();
-		this.swap=new LSH(dict,"SWAP");
 		this.dict = dict;
 	}
 
@@ -51,11 +49,21 @@ public class SwapCorrector extends Corrector {
 	 * @return retorna un conjunto (potencialmente vac�o) de sugerencias.
 	 * @throws IllegalArgumentException si la entrada no es una palabra v�lida 
 	 */
-	public Set<String> getCorrections(String wrong) {
-		if (!TokenScanner.isWord(wrong))
-			throw new IllegalArgumentException("Palabra invalida: " + wrong);
-		Set<String> posiblesSwaps = new HashSet<String>();
-		posiblesSwaps=swap.getPosiblesSwaps(wrong);
-		return posiblesSwaps;
+	public Set<String> getCorrections(String word) {
+		if (!TokenScanner.isWord(word))
+			throw new IllegalArgumentException("Palabra invalida: " + word);
+			
+		Set<String> salidas = new HashSet<>();
+		for (int i = 0; i < word.length() - 1; i++) {
+            char[] caracteres = word.toCharArray();
+            // swap entre i e i+1
+            char actual = caracteres[i];
+            caracteres[i] = caracteres[i + 1];
+            caracteres[i + 1] = actual;
+            String palabraSwapeada = new String(caracteres).toLowerCase();
+			if (this.dict.isWord(palabraSwapeada))
+				salidas.add(palabraSwapeada);
+		}
+		return matchCase(word, salidas);
 	}
 }

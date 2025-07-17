@@ -147,19 +147,14 @@ public class FileCorrector extends Corrector {
 		String normalizada = normalizar(wrong);
 		if (corrector.get(normalizada) != null)
 		{
-			System.out.println("Entrada entera: " + corrector.get(normalizada));
 			for (String correccion : corrector.get(normalizada))
-			{
-				System.out.println("Correccion: " + correccion);
 				salida.add(new String(correccion));
-			}
 		}
 		return matchCase(wrong, salida);
 	}
 
 	private String[] verificarFormato(String linea) throws FormatException
 	{
-		System.out.println("entrada: " + linea);
 		String[] salida = linea.split(",");
 		if (salida.length == 2)
 			return salida;
