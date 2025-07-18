@@ -13,54 +13,9 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
  * Una palabra "v�lida" es una secuencia de letras (determinado por Character.isLetter) 
  * o apostrofes.
  */
-public class Dictionary {
+public abstract class Dictionary {
 
-	private Set<String> palabras;
-
-	public Set<String> getPalabras() {
-		Set<String> salida = new HashSet<>();
-		salida.addAll(palabras);
-		return salida;
-	}
-
-	/**
-	 * Construye un diccionario usando un TokenScanner
-	 * <p>
-	 * Una palabra v�lida es una secuencia de letras (ver Character.isLetter) o apostrofes.
-	 * Toda palabra no v�lida se debe ignorar
-	 *
-	 * <p>
-	 *
-	 * @param ts 
-	 * @throws IOException Error leyendo el archivo
-	 * @throws IllegalArgumentException el TokenScanner es null
-	 */
-	public Dictionary(TokenScanner ts) throws IOException, IllegalArgumentException {
-		if (ts == null)
-			throw new IllegalArgumentException();
-		this.palabras = new HashSet<>();
-		while (ts.hasNext())
-		{
-			String palabra = normalizar(ts.next());
-			this.palabras.add(palabra);
-		}
-	}
-
-	/**
-	 * Construye un diccionario usando un archivo.
-	 *
-	 *
-	 * @param filename 
-	 * @throws FileNotFoundException si el archivo no existe
-	 * @throws IOException Error leyendo el archivo
-	 */
-	public static Dictionary make(String filename) throws IOException {
-		Reader r = new FileReader(filename);
-		Dictionary d = new Dictionary(new TokenScanner(r));
-		r.close();
-		return d;
-	}
-
+	
 	/**
 	 * Retorna el n�mero de palabras correctas en el diccionario.
 	 * Recuerde que como es case insensitive si Dogs y doGs est�n en el 
@@ -68,14 +23,7 @@ public class Dictionary {
 	 * 
 	 * @return n�mero de palabras �nicas
 	 */
-	public int getNumWords()
-	{
-		int cont = 0;
-		for (String palabra : this.palabras)
-			if (TokenScanner.isWord(palabra))
-				cont++;
-		return cont;
-	}
+	public abstract int getNumWords();
 
 	/**
 	 * Testea si una palabra es parte del diccionario. Si la palabra no est� en
@@ -89,11 +37,9 @@ public class Dictionary {
 	 * Asuma que todos los espacios en blanco antes y despues de la palabra fueron removidos.
 	 * @return si la palabra est� en el diccionario.
 	 */
-	public boolean isWord(String word) {
-		return word != null && this.palabras.contains(normalizar(word));
-	}
+	public abstract boolean isWord(String word);
 
-	private String normalizar(String word)
+	protected String normalizar(String word)
 	{
 		return word.toUpperCase().replace("’", "'").replace("‘", "'");
 	}

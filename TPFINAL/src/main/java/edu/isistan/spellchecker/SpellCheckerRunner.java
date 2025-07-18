@@ -9,6 +9,7 @@ import java.io.Writer;
 
 import edu.isistan.spellchecker.corrector.Corrector;
 import edu.isistan.spellchecker.corrector.Dictionary;
+import edu.isistan.spellchecker.corrector.impl.DictionaryTrie;
 import edu.isistan.spellchecker.corrector.impl.FileCorrector;
 import edu.isistan.spellchecker.corrector.impl.Levenshtein;
 import edu.isistan.spellchecker.corrector.impl.SwapCorrector;
@@ -60,7 +61,7 @@ public class SpellCheckerRunner {
 		try {
 			Reader in = new BufferedReader(new FileReader(args[0]));
 			Writer out = new BufferedWriter(new FileWriter(args[1]));
-			Dictionary dict = Dictionary.make(args[2]);
+			Dictionary dict = DictionaryTrie.make(args[2]);
 			SpellChecker sp = new SpellChecker(makeCorrector(args[3], dict), dict);
 			sp.checkDocument(in, System.in, out);
 			in.close();

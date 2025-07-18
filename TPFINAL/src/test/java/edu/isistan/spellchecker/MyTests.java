@@ -16,6 +16,8 @@ import org.junit.*;
 
 import edu.isistan.spellchecker.corrector.Corrector;
 import edu.isistan.spellchecker.corrector.Dictionary;
+import edu.isistan.spellchecker.corrector.DictionaryTrie;
+import edu.isistan.spellchecker.corrector.impl.DictionarySet;
 import edu.isistan.spellchecker.corrector.impl.FileCorrector;
 import edu.isistan.spellchecker.corrector.impl.FileCorrector.FormatException;
 import edu.isistan.spellchecker.corrector.impl.FileCorrectorTest;
@@ -96,31 +98,65 @@ public class MyTests
 
     @Test public void testPalabraPresente() throws IOException
     {
-        Dictionary d = new Dictionary(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        Dictionary d = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
         assertTrue("'day' -> deberia ser verdadero ('day' esta en el archivo)", d.isWord("day"));
     }
 
     @Test public void testPalabraNoPresente() throws IOException
     {
-        Dictionary d = new Dictionary(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        Dictionary d = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
         assertFalse("'palabra' -> deberia ser falso ('palabra' no esta en el archivo)", d.isWord("palabra"));
     }
 
     @Test public void testNumeroPalabras() throws IOException
     {
-        Dictionary d = new Dictionary(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        Dictionary d = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
         assertEquals(32, d.getNumWords());
     }
 
     @Test public void testStringVacio() throws IOException
     {
-        Dictionary d = new Dictionary(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        Dictionary d = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
         assertFalse("'' -> deberia ser falso ('' no es una palabra)", d.isWord(""));
     }
 
     @Test public void testPalabraPresenteCase() throws IOException
     {
-        Dictionary d = new Dictionary(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        Dictionary d = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        assertTrue("'day' -> deberia ser verdadero ('day' esta en el archivo)", d.isWord("day"));
+        assertTrue("'DaY' -> deberia ser verdadero ('DaY' esta en el archivo)", d.isWord("DaY"));
+        assertTrue("'dAy' -> deberia ser verdadero ('dAy' esta en el archivo)", d.isWord("dAy"));
+    }
+
+    //DictionaryTrie
+
+    @Test public void testPalabraPresenteTrie() throws IOException
+    {
+        DictionaryTrie d = new DictionaryTrie(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        assertTrue("'day' -> deberia ser verdadero ('day' esta en el archivo)", d.isWord("day"));
+    }
+
+    @Test public void testPalabraNoPresenteTrie() throws IOException
+    {
+        DictionaryTrie d = new DictionaryTrie(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        assertFalse("'palabra' -> deberia ser falso ('palabra' no esta en el archivo)", d.isWord("palabra"));
+    }
+
+    @Test public void testNumeroPalabrasTrie() throws IOException
+    {
+        DictionaryTrie d = new DictionaryTrie(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        assertEquals(32, d.getNumWords());
+    }
+
+    @Test public void testStringVacioTrie() throws IOException
+    {
+        DictionaryTrie d = new DictionaryTrie(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+        assertFalse("'' -> deberia ser falso ('' no es una palabra)", d.isWord(""));
+    }
+
+    @Test public void testPalabraPresenteCaseTrie() throws IOException
+    {
+        DictionaryTrie d = new DictionaryTrie(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
         assertTrue("'day' -> deberia ser verdadero ('day' esta en el archivo)", d.isWord("day"));
         assertTrue("'DaY' -> deberia ser verdadero ('DaY' esta en el archivo)", d.isWord("DaY"));
         assertTrue("'dAy' -> deberia ser verdadero ('dAy' esta en el archivo)", d.isWord("dAy"));
@@ -167,7 +203,7 @@ public class MyTests
     @Test public void testPalabraPresenteSwap() throws IOException {
 		Reader reader = new FileReader("src\\test\\resources\\swapDictionary.txt");
 		try {
-			Dictionary d = new Dictionary(new TokenScanner(reader));
+			Dictionary d = new DictionarySet(new TokenScanner(reader));
 			SwapCorrector swap = new SwapCorrector(d);
 			assertEquals("rooj -> {rojo}", makeSet(new String[]{"rojo"}), swap.getCorrections("rooj"));
 		} finally {
@@ -178,7 +214,7 @@ public class MyTests
     @Test public void testPalabraPresenteSwapCapitalizada() throws IOException {
 		Reader reader = new FileReader("src\\test\\resources\\swapDictionary.txt");
 		try {
-			Dictionary d = new Dictionary(new TokenScanner(reader));
+			Dictionary d = new DictionarySet(new TokenScanner(reader));
 			SwapCorrector swap = new SwapCorrector(d);
 			assertEquals("rooJ -> {rojo}", makeSet(new String[]{"rojo"}), swap.getCorrections("rooJ"));
 			assertEquals("Rooj -> {Rojo}", makeSet(new String[]{"Rojo"}), swap.getCorrections("Rooj"));

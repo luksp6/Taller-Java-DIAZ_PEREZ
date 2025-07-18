@@ -27,7 +27,7 @@ public class SwapCorrectorTest {
 	@Test public void testSwapCorrections() throws IOException {
 		Reader reader = new FileReader("src\\test\\resources\\smallDictionary.txt");
 		try {
-			Dictionary d = new Dictionary(new TokenScanner(reader));
+			Dictionary d = new DictionarySet(new TokenScanner(reader));
 			SwapCorrector swap = new SwapCorrector(d);
 			assertEquals("cya -> {cay}", makeSet(new String[]{"cay"}), swap.getCorrections("cya"));
 			assertEquals("oYurs -> {yours}", makeSet(new String[]{"yours"}), swap.getCorrections("oYurs"));

@@ -32,7 +32,7 @@ public class SpellCheckerTest {
 					throws IOException, FileCorrector.FormatException
 	{
 		String inicioRuta = "src\\test\\resources\\";
-		Dictionary dict = Dictionary.make(inicioRuta+fdict);
+		Dictionary dict = DictionarySet.make(inicioRuta+fdict);
 
 		Corrector corr = null;
 		if (fcorr == null) {
