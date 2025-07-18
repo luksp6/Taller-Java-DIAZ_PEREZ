@@ -62,7 +62,6 @@ public class SpellChecker {
 					return choice;
 				}
 			} catch (NumberFormatException ex) {
-				// Was not a number. Ignore and prompt again.
 			}
 			System.out.println("Entrada invalida. Pruebe de nuevo!");
 		}
@@ -94,8 +93,7 @@ public class SpellChecker {
 	public void checkDocument(Reader in, InputStream input, Writer out) throws IOException {
 		Scanner sc = new Scanner(input);
 		corregirDocumento(in, sc, out);
-		System.out.println("Correccion finalizada. Presione cualquier tecla para salir.");
-		getNextString(sc);		
+		System.out.println("Correccion finalizada. Presione CTRL + C para salir.");
 	}
 
 	private void corregirDocumento(Reader in, Scanner sc, Writer out) throws IllegalArgumentException, IOException
@@ -111,16 +109,25 @@ public class SpellChecker {
 				if (TokenScanner.isWord(token) && !this.dict.isWord(token))
 				{
 					List<String> correcciones = new ArrayList<>(this.corr.getCorrections(token));
-					if (correcciones.size() > 0)
+					System.out.println("Se detecto un error en la palabra \"" + token + "\". Puede tomar una de las siguientes opciones:");
+					System.out.println("[0] Conservar");
+					System.out.println("[1] Ingresar corrección");
+					for (int i = 0; i < correcciones.size(); i++)
+						System.out.println("[" + (i + 2) + "] " + correcciones.get(i));
+					System.out.print("Seleccione el índice de la opción deseada: ");
+					int entradaUsuario = getNextInt(0, correcciones.size() + 1, sc);
+					System.out.println("Opción seleccionada: " + entradaUsuario);
+					switch (entradaUsuario)
 					{
-						System.out.println("La palabra \"" + token + "\" tiene las siguientes correcciones:");
-						for (int i = 0; i < correcciones.size(); i++)
-							System.out.println("[" + i + "] " + correcciones.get(i));
-						System.out.println("[" + correcciones.size() + "] Conservar palabra");						
-						System.out.print("Seleccione el índice de la corrección deseada: ");
-						int entradaUsuario = getNextInt(0, correcciones.size(), sc);
-						if (entradaUsuario < correcciones.size())
-							token = correcciones.get(entradaUsuario);
+						case 0:								
+							break;
+						case 1:
+							token = getNextString(sc);
+							System.out.println("Corrección ingresada: " + token);
+							break;					
+						default:
+							token = correcciones.get(entradaUsuario - 2);
+							break;
 					}
 				}
 				output.write(token);

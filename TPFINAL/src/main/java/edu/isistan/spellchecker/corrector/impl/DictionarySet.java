@@ -14,7 +14,7 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
  * Una palabra "v�lida" es una secuencia de letras (determinado por Character.isLetter) 
  * o apostrofes.
  */
-public class DictionarySet extends Dictionary {
+public class DictionarySet {
 
 	private Set<String> palabras;
 
@@ -36,25 +36,10 @@ public class DictionarySet extends Dictionary {
 		this.palabras = new HashSet<>();
 		while (ts.hasNext())
 		{
-			String palabra = normalizar(ts.next());
+			String palabra = Dictionary.normalizar(ts.next());
 			if (TokenScanner.isWord(palabra))
 				this.palabras.add(palabra);
 		}
-	}
-
-	/**
-	 * Construye un diccionario usando un archivo.
-	 *
-	 *
-	 * @param filename 
-	 * @throws FileNotFoundException si el archivo no existe
-	 * @throws IOException Error leyendo el archivo
-	 */
-	public static DictionarySet make(String filename) throws IOException {
-		Reader r = new FileReader(filename);
-		DictionarySet d = new DictionarySet(new TokenScanner(r));
-		r.close();
-		return d;
 	}
 
 	/**
@@ -63,8 +48,7 @@ public class DictionarySet extends Dictionary {
 	 * diccionario, cuentan como una sola palabra.
 	 * 
 	 * @return n�mero de palabras �nicas
-	 */	
-	@Override
+	 */
 	public int getNumWords()
 	{
 		int cont = 0;
@@ -86,8 +70,7 @@ public class DictionarySet extends Dictionary {
 	 * Asuma que todos los espacios en blanco antes y despues de la palabra fueron removidos.
 	 * @return si la palabra est� en el diccionario.
 	 */
-	@Override
 	public boolean isWord(String word) {
-		return word != null && this.palabras.contains(normalizar(word));
+		return word != null && this.palabras.contains(Dictionary.normalizar(word));
 	}
 }

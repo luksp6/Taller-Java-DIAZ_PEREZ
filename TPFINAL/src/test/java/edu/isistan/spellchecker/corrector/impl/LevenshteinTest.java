@@ -30,7 +30,7 @@ public class LevenshteinTest {
 
 
 	@Before public void setUp() throws IOException {
-		Dictionary dict = new DictionarySet(new TokenScanner(new FileReader("src\\test\\resources\\smallDictionary.txt")));
+		Dictionary dict = new Dictionary(new TokenScanner(new FileReader("smallDictionary.txt")));
 		corr = new Levenshtein(dict);
 	}
 
@@ -61,6 +61,8 @@ public class LevenshteinTest {
 				makeSet(new String[]{"bay", "cay", "day", "any", "aye"}),
 				corr.getInsertions("ay"));
 	}
+
+
 	@Test public void testSubstitution() throws IOException {
 		assertEquals("teh -> {heh, meh, tah, tea, tee, ten, tex}",
 				makeSet(new String[]{"heh", "meh", "tah", "tea", "tee", "ten", "tex"}),

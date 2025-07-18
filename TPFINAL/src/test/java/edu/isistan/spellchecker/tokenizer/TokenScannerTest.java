@@ -44,16 +44,6 @@ public class TokenScannerTest {
 
   
   @Test public void testGetNextTokenWord() throws IOException {
-    
-    /*
-    Reader in = new StringReader("");
-    TokenScanner d = new TokenScanner(in);
-    try {
-      assertFalse("reached end of stream", d.hasNext());
-    }
-    finally {
-      in.close();
-    }*/
 	 Reader in = new StringReader("Aren't you \ntired"); 
     TokenScanner d = new TokenScanner(in);
     try {
@@ -75,7 +65,7 @@ public class TokenScannerTest {
       assertFalse("reached end of stream", d.hasNext());
     } finally {
 		  in.close();
+    }
   }
-}
 
 }

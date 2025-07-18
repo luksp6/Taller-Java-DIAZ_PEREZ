@@ -61,7 +61,7 @@ public class SpellCheckerRunner {
 		try {
 			Reader in = new BufferedReader(new FileReader(args[0]));
 			Writer out = new BufferedWriter(new FileWriter(args[1]));
-			Dictionary dict = DictionaryTrie.make(args[2]);
+			Dictionary dict = Dictionary.make(args[2]);
 			SpellChecker sp = new SpellChecker(makeCorrector(args[3], dict), dict);
 			sp.checkDocument(in, System.in, out);
 			in.close();

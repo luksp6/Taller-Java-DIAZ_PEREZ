@@ -36,7 +36,7 @@ public class FileCorrectorTest {
 
   
   @Test public void testGetCorrection() throws IOException, FileCorrector.FormatException  {
-    Corrector c = FileCorrector.make("src\\test\\resources\\smallMisspellings.txt");
+    Corrector c = FileCorrector.make("smallMisspellings.txt");
     assertEquals("lyon -> lion", makeSet(new String[]{"lion"}), c.getCorrections("lyon"));
     TreeSet<String> set2 = new TreeSet<String>();
     assertEquals("TIGGER -> {Trigger,Tiger}", makeSet(new String[]{"Trigger","Tiger"}), c.getCorrections("TIGGER"));

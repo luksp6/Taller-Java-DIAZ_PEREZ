@@ -37,25 +37,10 @@ public class DictionaryTrie
 		this.palabras = new Trie();
 		while (ts.hasNext())
 		{
-			String palabra = normalizar(ts.next());
+			String palabra = Dictionary.normalizar(ts.next());
 			if (TokenScanner.isWord(palabra))
 				this.palabras.insert(palabra);
 		}
-	}
-
-	/**
-	 * Construye un diccionario usando un archivo.
-	 *
-	 *
-	 * @param filename 
-	 * @throws FileNotFoundException si el archivo no existe
-	 * @throws IOException Error leyendo el archivo
-	 */
-	public static DictionaryTrie make(String filename) throws IOException {
-		Reader r = new FileReader(filename);
-		DictionaryTrie d = new DictionaryTrie(new TokenScanner(r));
-		r.close();
-		return d;
 	}
 
 	/**
@@ -83,7 +68,7 @@ public class DictionaryTrie
 	 * @return si la palabra est� en el diccionario.
 	 */	
 	public boolean isWord(String word) {
-		return word != null && this.palabras.find(super.normalizar(word));
+		return word != null && this.palabras.find(Dictionary.normalizar(word));
 	}
 
 	//Nodo
