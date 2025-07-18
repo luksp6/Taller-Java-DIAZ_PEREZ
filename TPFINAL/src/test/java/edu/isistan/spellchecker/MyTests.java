@@ -156,8 +156,7 @@ public class MyTests
     @Test public void testDiccionarioNull()
     {
         try {
-            SwapCorrector swap = new SwapCorrector(null);
-            
+            SwapCorrector swap = new SwapCorrector(null);            
             fail("Expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

@@ -94,8 +94,8 @@ public class SpellChecker {
 	public void checkDocument(Reader in, InputStream input, Writer out) throws IOException {
 		Scanner sc = new Scanner(input);
 		corregirDocumento(in, sc, out);
-		System.out.println("Presione cualquier tecla para salir.");
-		//getNextString(sc);		
+		System.out.println("Correccion finalizada. Presione cualquier tecla para salir.");
+		getNextString(sc);		
 	}
 
 	private void corregirDocumento(Reader in, Scanner sc, Writer out) throws IllegalArgumentException, IOException
@@ -108,20 +108,19 @@ public class SpellChecker {
 			while (ts.hasNext())
 			{
 				String token = ts.next();
-				System.out.println("TOKEN: " + token);
 				if (TokenScanner.isWord(token) && !this.dict.isWord(token))
 				{
-					System.out.println("Entra al if");
 					List<String> correcciones = new ArrayList<>(this.corr.getCorrections(token));
 					if (correcciones.size() > 0)
 					{
 						System.out.println("La palabra \"" + token + "\" tiene las siguientes correcciones:");
 						for (int i = 0; i < correcciones.size(); i++)
 							System.out.println("[" + i + "] " + correcciones.get(i));
-						System.out.println("Seleccione el índice de la corrección deseada.");
-						//int entradaUsuario = getNextInt(0, correcciones.size() -1, sc);
-						int entradaUsuario = 0;
-						token = correcciones.get(entradaUsuario);
+						System.out.println("[" + correcciones.size() + "] Conservar palabra");						
+						System.out.print("Seleccione el índice de la corrección deseada: ");
+						int entradaUsuario = getNextInt(0, correcciones.size(), sc);
+						if (entradaUsuario < correcciones.size())
+							token = correcciones.get(entradaUsuario);
 					}
 				}
 				output.write(token);
