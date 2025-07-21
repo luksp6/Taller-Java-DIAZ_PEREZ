@@ -1,5 +1,6 @@
 package edu.isistan.spellchecker.corrector.impl;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Corrector;
@@ -27,6 +28,7 @@ public class Levenshtein extends Corrector {
 
 
 	private final Dictionary dict;
+	private final Map<Integer, Set<String>> wordsByLength;
 
 	/**
 	 * Construye un Levenshtein Corrector usando un Dictionary.
@@ -38,6 +40,7 @@ public class Levenshtein extends Corrector {
 		if (dict == null)
 			throw new IllegalArgumentException();
 		this.dict = dict;
+		this.wordsByLength = dict.getByLength();
 	}
 
 	/**
@@ -48,12 +51,22 @@ public class Levenshtein extends Corrector {
 	{
 		Set<String> output = new HashSet<>();
 		String normalizada = normalizar(wrong);
-		for (int i = 0; i < normalizada.length(); i++)
-		{
-			String suggestion = normalizada.substring(0, i) + normalizada.substring(i + 1);
-			if (this.dict.isWord(suggestion))
-				output.add(suggestion);
-		}
+		Set<String> candidates = this.wordsByLength.get(normalizada.length() - 1);
+		if (candidates != null)
+			for (String candidate : candidates)
+			{
+				int distance = 0, wrongIndex = 0, candidateIndex = 0;
+				while (wrongIndex < normalizada.length() && candidateIndex < candidate.length())
+				{
+					if (normalizada.charAt(wrongIndex) != candidate.charAt(candidateIndex))
+						distance++;
+					else
+						candidateIndex++;
+					wrongIndex++;
+				}
+				if (distance <= 1)
+					output.add(candidate);
+			}
 		return matchCase(wrong, output);
 	}
 
@@ -61,16 +74,23 @@ public class Levenshtein extends Corrector {
 	 * @param s palabra
 	 * @return todas las palabras a substitution distance uno
 	 */
-	public Set<String> getSubstitutions(String wrong)
+	Set<String> getSubstitutions(String wrong)
 	{
 		Set<String> output = new HashSet<>();
 		String normalizada = normalizar(wrong);
-		for (int i = 0; i < normalizada.length(); i++)
-			for (char c = 'A'; c <= 'Z'; c++)
+		Set<String> candidates = this.wordsByLength.get(normalizada.length());
+		if (candidates != null)
+			for (String candidate : candidates)
 			{
-				String suggestion = normalizada.substring(0, i) + c + normalizada.substring(i + 1);
-				if (this.dict.isWord(suggestion) && !suggestion.equalsIgnoreCase(wrong))
-					output.add(suggestion);
+				int distance = 0, wrongIndex = 0;
+				while (wrongIndex < normalizada.length())
+				{
+					if (normalizada.charAt(wrongIndex) != candidate.charAt(wrongIndex))
+						distance++;
+					wrongIndex++;
+				}
+				if (distance == 1)
+					output.add(candidate);
 			}
 		return matchCase(wrong, output);
 	}
@@ -83,12 +103,21 @@ public class Levenshtein extends Corrector {
 	{
 		Set<String> output = new HashSet<>();
 		String normalizada = normalizar(wrong);
-		for (int i = 0; i <= normalizada.length(); i++)
-			for (char c = 'A'; c <= 'Z'; c++)
+		Set<String> candidates = this.wordsByLength.get(normalizada.length() + 1);
+		if (candidates != null)
+			for (String candidate : candidates)
 			{
-				String suggestion = normalizada.substring(0, i) + c + normalizada.substring(i);
-				if (this.dict.isWord(suggestion))
-					output.add(suggestion);
+				int distance = 0, wrongIndex = 0, candidateIndex = 0;
+				while (wrongIndex < normalizada.length() && candidateIndex < candidate.length())
+				{
+					if (normalizada.charAt(wrongIndex) != candidate.charAt(candidateIndex))
+						distance++;
+					else
+						wrongIndex++;
+					candidateIndex++;
+				}
+				if (distance <= 1)
+					output.add(candidate);
 			}
 		return matchCase(wrong, output);
 	}

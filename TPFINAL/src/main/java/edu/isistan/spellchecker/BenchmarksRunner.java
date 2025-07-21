@@ -1,17 +1,12 @@
 package edu.isistan.spellchecker;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import edu.isistan.spellchecker.corrector.impl.DictionarySet;
 import edu.isistan.spellchecker.corrector.impl.DictionaryTrie;
@@ -20,31 +15,112 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
-@Fork(value = 1, warmups = 1)
 public class BenchmarksRunner {
 
-    private DictionarySet dictSet;
-    private DictionaryTrie dictTrie;
+    private DictionarySet dictSetGrande;
+    private DictionaryTrie dictTrieGrande;
+    private TokenScanner tsGrande;
+
+    private TokenScanner tsChico;    
+    private DictionarySet dictSetChico;
+    private DictionaryTrie dictTrieChico;
+
+    private String[] palabrasPresentes;
+    private String[] palabrasAusentes;
+
 
     @Setup
     public void setup() throws IOException {
-        dictSet = new DictionarySet(new TokenScanner(new FileReader("dictionary.txt")));
-        dictTrie = new DictionaryTrie(new TokenScanner(new FileReader("dictionary.txt")));
-    }
+        tsGrande = new TokenScanner(new FileReader("dictionary.txt"));
+        dictSetGrande = new DictionarySet(tsGrande);
+        dictTrieGrande = new DictionaryTrie(tsGrande);
 
-    @Benchmark
-    public int benchmarkSetLookup() {
-        return testLookups(dictSet, "SET");
+        
+        tsChico = new TokenScanner(new FileReader("smallDictionary.txt"));
+        dictSetChico = new DictionarySet(tsChico);
+        dictTrieChico = new DictionaryTrie(tsChico);
+
+        palabrasPresentes = new String[]{ "dog", "cat", "mouse", "apple", "banana", "keyboard"};
+        palabrasAusentes = new String[]{ "messi", "otorrinolaringologo", "supercalifragilisticoespialidoso", "lewandowski", "kvaratskhelia", "zonzorroneria"};
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
-    public int benchmarkTrieLookup() {
-        return testLookups(dictTrie, "TRIE");
+    public void benchmarkSetNewGrande(Blackhole bh) throws IllegalArgumentException, IOException
+    {
+        bh.consume(new DictionarySet(tsGrande));
     }
 
-    static private int testLookups(Object dict, String type) {
-        String[] words = { "dog", "cat", "mouse", "apple", "banana", "keyboard"};
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkTrieNewGrande(Blackhole bh) throws IllegalArgumentException, IOException
+    {
+        bh.consume(new DictionaryTrie(tsGrande));
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkSetNewChico(Blackhole bh) throws IllegalArgumentException, IOException
+    {
+        bh.consume(new DictionarySet(tsChico));
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkTrieNewChico(Blackhole bh) throws IllegalArgumentException, IOException
+    {
+        bh.consume(new DictionaryTrie(tsChico));
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkSetIsWordGrandePresente() {
+        return testIsWord(dictSetGrande, "SET", palabrasPresentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkTrieIsWordGrandePresente() {
+        return testIsWord(dictTrieGrande, "TRIE", palabrasPresentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkSetIsWordGrandeAusente() {
+        return testIsWord(dictSetGrande, "SET", palabrasAusentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkTrieIsWordGrandeAusente() {
+        return testIsWord(dictTrieGrande, "TRIE", palabrasAusentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkSetIsWordChicoPresente() {
+        return testIsWord(dictSetChico, "SET", palabrasPresentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkTrieIsWordChicoPresente() {
+        return testIsWord(dictTrieChico, "TRIE", palabrasPresentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkSetIsWordChicoAusente() {
+        return testIsWord(dictSetChico, "SET", palabrasAusentes);
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public int benchmarkTrieIsWordChicoAusente() {
+        return testIsWord(dictTrieChico, "TRIE", palabrasAusentes);
+    }
+
+    static private int testIsWord(Object dict, String type, String[] words) {
         int found = 0;
         for (int i = 0; i < 1000; i++)
             for (String word : words)
@@ -61,14 +137,35 @@ public class BenchmarksRunner {
         return found;
     }
 
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkGetWordsSetChico(Blackhole bh)
+    {
+        bh.consume(dictSetChico.getWords());
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkGetWordsTrieChico(Blackhole bh)
+    {
+        bh.consume(dictTrieChico.getWords());
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkGetWordsSetGrande(Blackhole bh)
+    {
+        bh.consume(dictSetGrande.getWords());
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 1)
+    public void benchmarkGetWordsTrieGrande(Blackhole bh)
+    {
+        bh.consume(dictTrieGrande.getWords());
+    }
+
     public static void main(String[] args) throws RunnerException, IOException {
         org.openjdk.jmh.Main.main(args);
-        /*
-        Options opt = new OptionsBuilder()
-                .include(BenchmarksRunner.class.getSimpleName())
-                .forks(1)
-                .build();
-
-        new Runner(opt).run(); */
     }
 }

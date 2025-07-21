@@ -1,6 +1,10 @@
 package edu.isistan.spellchecker.corrector;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Dictionary;
 import edu.isistan.spellchecker.corrector.impl.DictionarySet;
@@ -14,7 +18,7 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
  * Una palabra "v�lida" es una secuencia de letras (determinado por Character.isLetter) 
  * o apostrofes.
  */
-public class Dictionary {
+public class Dictionary  {
 
 	private DictionarySet implementacion;
 	//private DictionaryTrie implementacion;
@@ -79,6 +83,22 @@ public class Dictionary {
 	 */
 	public boolean isWord(String word) {
 		return this.implementacion.isWord(word);
+	}
+
+	public Map<Integer, Set<String>> getByLength()
+	{		
+		Map<Integer, Set<String>> output = new HashMap<>();
+		Set<String> dictWords = this.implementacion.getWords();
+		for (String word : dictWords)
+			if (output.keySet().contains(word.length()))
+				output.get(word.length()).add(word);
+			else
+			{
+				Set<String> newEntry = new HashSet<>();
+				newEntry.add(word);
+				output.put(word.length(), newEntry);
+			}
+		return output;
 	}
 
 	public static String normalizar(String word)

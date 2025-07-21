@@ -2,7 +2,10 @@ package edu.isistan.spellchecker.corrector.impl;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Dictionary;
 import edu.isistan.spellchecker.tokenizer.TokenScanner;
@@ -71,6 +74,11 @@ public class DictionaryTrie
 		return word != null && this.palabras.find(Dictionary.normalizar(word));
 	}
 
+	public Set<String> getWords()
+	{
+		return this.palabras.getWords();
+	}
+
 	//Nodo
 	private class TrieNode 
 	{
@@ -96,6 +104,22 @@ public class DictionaryTrie
 		{
 			this.root = new TrieNode();
 			this.cantidadElementos = 0;
+		}
+
+		public Set<String> getWords()
+		{
+			Set<String> palabras = new HashSet<>();
+			getWordsHelper(root, "", palabras);
+			return palabras;
+		}
+
+		private void getWordsHelper(TrieNode node, String currentWord, Set<String> palabras)
+		{
+			if (node.isWord)
+				palabras.add(currentWord);
+
+			for (Entry<Character, TrieNode> entry : node.children.entrySet())
+				getWordsHelper(entry.getValue(), currentWord + entry.getKey(), palabras);
 		}
 
 		public void insert(String word)

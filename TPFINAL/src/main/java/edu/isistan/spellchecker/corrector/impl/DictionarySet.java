@@ -73,4 +73,9 @@ public class DictionarySet {
 	public boolean isWord(String word) {
 		return word != null && this.palabras.contains(Dictionary.normalizar(word));
 	}
+
+	public Set<String> getWords()
+	{		
+		return new HashSet<String>(this.palabras);
+	}
 }
