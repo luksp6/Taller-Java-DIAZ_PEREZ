@@ -51,11 +51,7 @@ public class DictionarySet {
 	 */
 	public int getNumWords()
 	{
-		int cont = 0;
-		for (String palabra : this.palabras)
-			if (TokenScanner.isWord(palabra))
-				cont++;
-		return cont;
+		return this.palabras.size();
 	}
 
 	/**

@@ -2,6 +2,7 @@ package edu.isistan.spellchecker;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.*;
@@ -19,9 +20,7 @@ public class BenchmarksRunner {
 
     private DictionarySet dictSetGrande;
     private DictionaryTrie dictTrieGrande;
-    private TokenScanner tsGrande;
 
-    private TokenScanner tsChico;    
     private DictionarySet dictSetChico;
     private DictionaryTrie dictTrieChico;
 
@@ -31,14 +30,12 @@ public class BenchmarksRunner {
 
     @Setup
     public void setup() throws IOException {
-        tsGrande = new TokenScanner(new FileReader("dictionary.txt"));
-        dictSetGrande = new DictionarySet(tsGrande);
-        dictTrieGrande = new DictionaryTrie(tsGrande);
+        dictSetGrande = new DictionarySet(new TokenScanner(new FileReader("dictionary.txt")));
+        dictTrieGrande = new DictionaryTrie(new TokenScanner(new FileReader("dictionary.txt")));
 
         
-        tsChico = new TokenScanner(new FileReader("smallDictionary.txt"));
-        dictSetChico = new DictionarySet(tsChico);
-        dictTrieChico = new DictionaryTrie(tsChico);
+        dictSetChico = new DictionarySet(new TokenScanner(new FileReader("smallDictionary.txt")));
+        dictTrieChico = new DictionaryTrie(new TokenScanner(new FileReader("smallDictionary.txt")));
 
         palabrasPresentes = new String[]{ "dog", "cat", "mouse", "apple", "banana", "keyboard"};
         palabrasAusentes = new String[]{ "messi", "otorrinolaringologo", "supercalifragilisticoespialidoso", "lewandowski", "kvaratskhelia", "zonzorroneria"};
@@ -48,28 +45,28 @@ public class BenchmarksRunner {
     @Fork(value = 1, warmups = 1)
     public void benchmarkSetNewGrande(Blackhole bh) throws IllegalArgumentException, IOException
     {
-        bh.consume(new DictionarySet(tsGrande));
+        bh.consume(new DictionarySet(new TokenScanner(new FileReader("dictionary.txt"))));
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkTrieNewGrande(Blackhole bh) throws IllegalArgumentException, IOException
     {
-        bh.consume(new DictionaryTrie(tsGrande));
+        bh.consume(new DictionaryTrie(new TokenScanner(new FileReader("dictionary.txt"))));
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkSetNewChico(Blackhole bh) throws IllegalArgumentException, IOException
     {
-        bh.consume(new DictionarySet(tsChico));
+        bh.consume(new DictionarySet(new TokenScanner(new FileReader("smallDictionary.txt"))));
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkTrieNewChico(Blackhole bh) throws IllegalArgumentException, IOException
     {
-        bh.consume(new DictionaryTrie(tsChico));
+        bh.consume(new DictionaryTrie(new TokenScanner(new FileReader("smallDictionary.txt"))));
     }
 
     @Benchmark
@@ -141,28 +138,38 @@ public class BenchmarksRunner {
     @Fork(value = 1, warmups = 1)
     public void benchmarkGetWordsSetChico(Blackhole bh)
     {
-        bh.consume(dictSetChico.getWords());
+        for (int i = 0; i < 1000; i++)
+        {
+            Set<String> words = dictSetChico.getWords();
+            bh.consume(words);
+        }
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkGetWordsTrieChico(Blackhole bh)
     {
-        bh.consume(dictTrieChico.getWords());
+        for (int i = 0; i < 1000; i++)
+        {
+            Set<String> words = dictTrieChico.getWords();
+            bh.consume(words);
+        }
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkGetWordsSetGrande(Blackhole bh)
     {
-        bh.consume(dictSetGrande.getWords());
+        Set<String> words = dictSetGrande.getWords();
+        bh.consume(words);
     }
 
     @Benchmark
     @Fork(value = 1, warmups = 1)
     public void benchmarkGetWordsTrieGrande(Blackhole bh)
     {
-        bh.consume(dictTrieGrande.getWords());
+        Set<String> words = dictTrieGrande.getWords();
+        bh.consume(words);
     }
 
     public static void main(String[] args) throws RunnerException, IOException {
