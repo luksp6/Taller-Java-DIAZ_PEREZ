@@ -1,6 +1,7 @@
 package edu.isistan.spellchecker.corrector.impl;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import edu.isistan.spellchecker.corrector.Corrector;
@@ -19,6 +20,7 @@ import edu.isistan.spellchecker.tokenizer.TokenScanner;
  */
 public class SwapCorrector extends Corrector {
 	private final Dictionary dict;
+	private final Map<Integer, Set<String>> wordsByLength;
 	/**
 	 * Construcye el SwapCorrector usando un Dictionary.
 	 *
@@ -29,6 +31,7 @@ public class SwapCorrector extends Corrector {
 		if (dict == null)
 			throw new IllegalArgumentException();
 		this.dict = dict;
+		this.wordsByLength = dict.getByLength();
 	}
 
 	/**
@@ -49,21 +52,23 @@ public class SwapCorrector extends Corrector {
 	 * @return retorna un conjunto (potencialmente vac�o) de sugerencias.
 	 * @throws IllegalArgumentException si la entrada no es una palabra v�lida 
 	 */
-	public Set<String> getCorrections(String word) {
-		if (!TokenScanner.isWord(word))
-			throw new IllegalArgumentException("Palabra invalida: " + word);
-			
+	public Set<String> getCorrections(String wrong) {
+		if (!TokenScanner.isWord(wrong))
+			throw new IllegalArgumentException("Palabra invalida: " + wrong);
+		String normalizada = normalizar(wrong);
+		Set<String> candidates = this.wordsByLength.get(normalizada.length());
 		Set<String> salidas = new HashSet<>();
-		for (int i = 0; i < word.length() - 1; i++) {
-            char[] caracteres = word.toCharArray();
+		for (int i = 0; i < normalizada.length() - 1; i++) {
+            char[] caracteres = normalizada.toCharArray();
             // swap entre i e i+1
             char actual = caracteres[i];
             caracteres[i] = caracteres[i + 1];
             caracteres[i + 1] = actual;
-            String palabraSwapeada = new String(caracteres).toLowerCase();
-			if (this.dict.isWord(palabraSwapeada))
+            String palabraSwapeada = new String(caracteres).toUpperCase() ;
+			//buscar palabra swapeada
+			if (candidates.contains(palabraSwapeada))
 				salidas.add(palabraSwapeada);
 		}
-		return matchCase(word, salidas);
+		return matchCase(wrong, salidas);
 	}
 }
