@@ -93,7 +93,7 @@ public class SpellChecker {
 	public void checkDocument(Reader in, InputStream input, Writer out) throws IOException {
 		Scanner sc = new Scanner(input);
 		corregirDocumento(in, sc, out);
-		System.out.println("Correccion finalizada. Presione CTRL + C para salir.");
+		System.out.println("Correccion finalizada.");
 	}
 
 	private void corregirDocumento(Reader in, Scanner sc, Writer out) throws IllegalArgumentException, IOException
@@ -116,12 +116,12 @@ public class SpellChecker {
 						System.out.println("[" + (i + 2) + "] " + correcciones.get(i));
 					System.out.print("Seleccione el índice de la opción deseada: ");
 					int entradaUsuario = getNextInt(0, correcciones.size() + 1, sc);
-					System.out.println("Opción seleccionada: " + entradaUsuario);
 					switch (entradaUsuario)
 					{
 						case 0:								
 							break;
 						case 1:
+						System.out.print("Ingrese su correccion: ");
 							token = getNextString(sc);
 							System.out.println("Corrección ingresada: " + token);
 							break;					
